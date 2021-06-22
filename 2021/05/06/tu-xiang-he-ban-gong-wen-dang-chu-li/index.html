@@ -523,14 +523,14 @@
 (&#39;JPEG&#39;, (500, 750), &#39;RGB&#39;)
 &gt;&gt;&gt; image.show()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="./res/image-show.png"></p>
+<p><img src="/2021/05/06/tu-xiang-he-ban-gong-wen-dang-chu-li/image-show.png"></p>
 <ol>
 <li><p>剪裁图像</p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">&gt;&gt;&gt; image &#x3D; Image.open(&#39;.&#x2F;res&#x2F;guido.jpg&#39;)
 &gt;&gt;&gt; rect &#x3D; 80, 20, 310, 360
 &gt;&gt;&gt; image.crop(rect).show()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="./res/image-crop.png"></p>
+<p><img src="/2021/05/06/tu-xiang-he-ban-gong-wen-dang-chu-li/image-crop.png"></p>
 </li>
 <li><p>生成缩略图</p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">&gt;&gt;&gt; image &#x3D; Image.open(&#39;.&#x2F;res&#x2F;guido.jpg&#39;)
@@ -538,7 +538,7 @@
 &gt;&gt;&gt; image.thumbnail(size)
 &gt;&gt;&gt; image.show()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="./res/image-thumbnail.png"></p>
+<p><img src="/2021/05/06/tu-xiang-he-ban-gong-wen-dang-chu-li/image-thumbnail.png"></p>
 </li>
 <li><p>缩放和黏贴图像</p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">&gt;&gt;&gt; image1 &#x3D; Image.open(&#39;.&#x2F;res&#x2F;luohao.png&#39;)
@@ -548,15 +548,15 @@
 &gt;&gt;&gt; width, height &#x3D; guido_head.size
 &gt;&gt;&gt; image1.paste(guido_head.resize((int(width &#x2F; 1.5), int(height &#x2F; 1.5))), (172, 40))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="./res/image-paste.png"></p>
+<p><img src="/2021/05/06/tu-xiang-he-ban-gong-wen-dang-chu-li/image-paste.png"></p>
 </li>
 <li><p>旋转和翻转</p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">&gt;&gt;&gt; image &#x3D; Image.open(&#39;.&#x2F;res&#x2F;guido.png&#39;)
 &gt;&gt;&gt; image.rotate(180).show()
 &gt;&gt;&gt; image.transpose(Image.FLIP_LEFT_RIGHT).show()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="./res/image-rotate.png"></p>
-<p><img src="./res/image-transpose.png"></p>
+<p><img src="/2021/05/06/tu-xiang-he-ban-gong-wen-dang-chu-li/image-rotate.png"></p>
+<p><img src="/2021/05/06/tu-xiang-he-ban-gong-wen-dang-chu-li/image-transpose.png"></p>
 </li>
 <li><p>操作像素</p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">&gt;&gt;&gt; image &#x3D; Image.open(&#39;.&#x2F;res&#x2F;guido.jpg&#39;)
@@ -566,7 +566,7 @@
 ... 
 &gt;&gt;&gt; image.show()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="./res/image-putpixel.png"></p>
+<p><img src="/2021/05/06/tu-xiang-he-ban-gong-wen-dang-chu-li/image-putpixel.png"></p>
 </li>
 <li><p>滤镜效果</p>
 <pre class="line-numbers language-Python" data-language="Python"><code class="language-Python">&gt;&gt;&gt; from PIL import Image, ImageFilter
@@ -574,7 +574,7 @@
 &gt;&gt;&gt; image &#x3D; Image.open(&#39;.&#x2F;res&#x2F;guido.jpg&#39;)
 &gt;&gt;&gt; image.filter(ImageFilter.CONTOUR).show()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="./res/image-filter.png"></p>
+<p><img src="/2021/05/06/tu-xiang-he-ban-gong-wen-dang-chu-li/image-filter.png"></p>
 </li>
 </ol>
 <h3 id="处理Excel电子表格"><a href="#处理Excel电子表格" class="headerlink" title="处理Excel电子表格"></a>处理Excel电子表格</h3><p>Python的openpyxl模块让我们可以在Python程序中读取和修改Excel电子表格，当然实际工作中，我们可能会用LibreOffice Calc和OpenOffice Calc来处理Excel的电子表格文件，这就意味着openpyxl模块也能处理来自这些软件生成的电子表格。关于openpyxl的使用手册和使用文档可以查看它的<a target="_blank" rel="noopener" href="https://openpyxl.readthedocs.io/en/stable/#">官方文档</a>。</p>
