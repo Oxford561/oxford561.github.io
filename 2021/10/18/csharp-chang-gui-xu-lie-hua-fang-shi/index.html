@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="第一个CPP程序, 水聿津">
+    <meta name="keywords" content="C# 常规序列化方式, 水聿津">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>第一个CPP程序 | 水聿津</title>
+    <title>C# 常规序列化方式 | 水聿津</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">第一个CPP程序</h1>
+                    <h1 class="description center-align post-title">C# 常规序列化方式</h1>
                 </div>
             </div>
         </div>
@@ -432,7 +432,7 @@
                     <div class="article-tag">
                         
                             <a href="/tags/C/">
-                                <span class="chip bg-color">C++</span>
+                                <span class="chip bg-color">C#</span>
                             </a>
                         
                     </div>
@@ -456,7 +456,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-22
+                    2021-10-18
                 </div>
                 
 
@@ -480,21 +480,67 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>既然是学习C++，必然少不了我们的宇宙最好的IDE—VS，使用VS创建一个支持C++的空项目。<br><img src="/2021/06/22/di-yi-ge-cpp-cheng-xu/C++01.png"><br><img src="/2021/06/22/di-yi-ge-cpp-cheng-xu/C++02.png"></p>
-<h2 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h2><p>然后在创建好的工程里，源文件右击添加新建项，选择cpp文件进行代码文件的创建。<br><img src="/2021/06/22/di-yi-ge-cpp-cheng-xu/C++03.png"></p>
-<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><p>在 CPP 文件中编写如下的代码，便能够得到 Hello World的结果了，具体代码的作用暂且不管~</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">
-#include &lt;iostream&gt;
-using namespace std;
-
-int main() &#123;
-	cout &lt;&lt; &quot;Hello World&quot; &lt;&lt; endl;
-	return 0;
+                <h2 id="序列化是什么？"><a href="#序列化是什么？" class="headerlink" title="序列化是什么？"></a>序列化是什么？</h2><p><b>序列化</b>就是将对象的状态信息转换为可以存储或传输形式的过程。 其实就是将对象持久化，比如说把对象保存为二进制或者是XML的方式。 可以将对象序列到流、磁盘、内存和网络等等。 相反，反序列化则是将存储或传输形式转换为对象的过程。</p>
+<h2 id="序列化对象"><a href="#序列化对象" class="headerlink" title="序列化对象"></a>序列化对象</h2><p>序列化的对象需要在 class 上面添加 「 Serializable 」 标签，嵌套对象也是需要的。</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">[Serializable]
+class Student
+&#123;
+    public string name;
+    public int age;
+    public Address address;
 &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h2><p>写完代码在VS上点击运行按钮即可看到运行结果。</p>
-<p><img src="/2021/06/22/di-yi-ge-cpp-cheng-xu/C++04.png"></p>
+[Serializable]
+class Address
+&#123;
+    public string province;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="序列化代码"><a href="#序列化代码" class="headerlink" title="序列化代码"></a>序列化代码</h2><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static byte[] Serialize(Student stu)
+&#123;
+    byte[] data &#x3D; null;
+    MemoryStream ms &#x3D; new MemoryStream();
+    BinaryFormatter bf &#x3D; new BinaryFormatter();
+    try
+    &#123;
+        bf.Serialize(ms, stu);
+        ms.Seek(0, SeekOrigin.Begin);
+        data &#x3D; ms.ToArray();
+    &#125;
+    catch (SerializationException e)
+    &#123;
+        Console.WriteLine(e.ToString());
+    &#125;
+    finally
+    &#123;
+        ms.Close();
+    &#125;
+    return data;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="反序列化代码"><a href="#反序列化代码" class="headerlink" title="反序列化代码"></a>反序列化代码</h2><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static Student DeSerialize(byte[] bytes)
+&#123;
+    Student newStu &#x3D; null;
+    MemoryStream ms &#x3D; new MemoryStream(bytes);
+    BinaryFormatter bf &#x3D; new BinaryFormatter();
+    try
+    &#123;
+        newStu &#x3D; (Student)bf.Deserialize(ms);
+    &#125;
+    catch (SerializationException e)
+    &#123;
+        Console.WriteLine(e.ToString());
+    &#125;
+    finally
+    &#123;
+        ms.Close();
+    &#125;
+    return newStu;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -521,7 +567,7 @@ int main() &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://oxford561.github.io/2021/06/22/di-yi-ge-cpp-cheng-xu/">https://oxford561.github.io/2021/06/22/di-yi-ge-cpp-cheng-xu/</a>
+                    <a href="https://oxford561.github.io/2021/10/18/csharp-chang-gui-xu-lie-hua-fang-shi/">https://oxford561.github.io/2021/10/18/csharp-chang-gui-xu-lie-hua-fang-shi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -560,7 +606,7 @@ int main() &#123;
                         <div class="article-tag">
                             
                                 <a href="/tags/C/">
-                                    <span class="chip bg-color">C++</span>
+                                    <span class="chip bg-color">C#</span>
                                 </a>
                             
                         </div>
@@ -736,13 +782,13 @@ int main() &#123;
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/18/csharp-chang-gui-xu-lie-hua-fang-shi/">
+                <a href="/2021/10/18/protobuf-de-ji-ben-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="C# 常规序列化方式">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Protobuf 的基本使用">
                         
-                        <span class="card-title">C# 常规序列化方式</span>
+                        <span class="card-title">Protobuf 的基本使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -785,13 +831,13 @@ int main() &#123;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/21/you-yong-chu-chang-shi/">
+                <a href="/2021/06/22/di-yi-ge-cpp-cheng-xu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="游泳初尝试">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="第一个CPP程序">
                         
-                        <span class="card-title">游泳初尝试</span>
+                        <span class="card-title">第一个CPP程序</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -802,14 +848,14 @@ int main() &#123;
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-22
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%94%9F%E6%B4%BB/" class="post-category">
-                                    生活
+                            <a href="/categories/%E6%8A%80%E6%9C%AF/" class="post-category">
+                                    技术
                                 </a>
                             
                             
@@ -819,8 +865,8 @@ int main() &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%97%A5%E8%AE%B0%E9%9A%8F%E7%AC%94/">
-                        <span class="chip bg-color">日记随笔</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C++</span>
                     </a>
                     
                 </div>

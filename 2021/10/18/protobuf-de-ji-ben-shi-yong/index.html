@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="第一个CPP程序, 水聿津">
+    <meta name="keywords" content="Protobuf 的基本使用, 水聿津">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>第一个CPP程序 | 水聿津</title>
+    <title>Protobuf 的基本使用 | 水聿津</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">第一个CPP程序</h1>
+                    <h1 class="description center-align post-title">Protobuf 的基本使用</h1>
                 </div>
             </div>
         </div>
@@ -432,7 +432,7 @@
                     <div class="article-tag">
                         
                             <a href="/tags/C/">
-                                <span class="chip bg-color">C++</span>
+                                <span class="chip bg-color">C#</span>
                             </a>
                         
                     </div>
@@ -456,7 +456,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-06-22
+                    2021-10-18
                 </div>
                 
 
@@ -480,21 +480,78 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>既然是学习C++，必然少不了我们的宇宙最好的IDE—VS，使用VS创建一个支持C++的空项目。<br><img src="/2021/06/22/di-yi-ge-cpp-cheng-xu/C++01.png"><br><img src="/2021/06/22/di-yi-ge-cpp-cheng-xu/C++02.png"></p>
-<h2 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h2><p>然后在创建好的工程里，源文件右击添加新建项，选择cpp文件进行代码文件的创建。<br><img src="/2021/06/22/di-yi-ge-cpp-cheng-xu/C++03.png"></p>
-<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><p>在 CPP 文件中编写如下的代码，便能够得到 Hello World的结果了，具体代码的作用暂且不管~</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">
-#include &lt;iostream&gt;
-using namespace std;
-
-int main() &#123;
-	cout &lt;&lt; &quot;Hello World&quot; &lt;&lt; endl;
-	return 0;
+                <h2 id="什么是-Protobuf？"><a href="#什么是-Protobuf？" class="headerlink" title="什么是 Protobuf？"></a>什么是 Protobuf？</h2><blockquote>
+<p><em>Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据序列化，很适合做数据存储或 RPC 数据交换格式。它可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。</em></p>
+</blockquote>
+<h2 id="Protobuf-的优势"><a href="#Protobuf-的优势" class="headerlink" title="Protobuf 的优势"></a>Protobuf 的优势</h2><ul>
+<li>序列化和反序列化速度很快</li>
+<li>与语言平台无关，可以实现跨语言平台的数据转换</li>
+<li>数据能实现高强度的压缩，占用空间会很小</li>
+<li>扩展性和兼容性好，更新数据结构后也能兼容旧版本</li>
+</ul>
+<h2 id="Protobuf-的基本使用（protobuf-net版本）"><a href="#Protobuf-的基本使用（protobuf-net版本）" class="headerlink" title="Protobuf 的基本使用（protobuf-net版本）"></a>Protobuf 的基本使用（protobuf-net版本）</h2><p>Protobuf 有很多个语言版本，对于 C# 而言，没有采用 Google 的版本，使用的是 <a target="_blank" rel="noopener" href="https://github.com/protobuf-net/protobuf-net">protobuf-net</a> 。</p>
+<p>protobuf-net 是一个基于合约的 .NET 代码序列化器，它恰好以谷歌设计的“协议缓冲区”序列化格式写入数据。但是，该 API 与 Google 的非常不同，并且遵循典型的 .NET 模式（它在使用上具有广泛的可比性<code>XmlSerializer</code>，例如<code>DataContractSerializer</code>、 等）。它应该适用于大多数编写标准类型并可以使用属性的 .NET 语言。</p>
+<h2 id="Protobuf-对象"><a href="#Protobuf-对象" class="headerlink" title="Protobuf 对象"></a>Protobuf 对象</h2><p>相对于常规版序列化对象而言，Protobuf 针对对象添加了 「 ProtoContract」 标签，对于每个对象下的成员使用 「 ProtoMember」 标签，序号代表其所处的位置。</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">[ProtoContract]
+[Serializable]
+class Student
+&#123;
+    [ProtoMember(1)]
+    public string name;
+    [ProtoMember(2)]
+    public int age;
+    [ProtoMember(3)]
+    public Address address;
 &#125;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h2><p>写完代码在VS上点击运行按钮即可看到运行结果。</p>
-<p><img src="/2021/06/22/di-yi-ge-cpp-cheng-xu/C++04.png"></p>
+[ProtoContract]
+[Serializable]
+class Address
+&#123;
+    [ProtoMember(1)]
+    public string province;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="Protobuf-序列化"><a href="#Protobuf-序列化" class="headerlink" title="Protobuf 序列化"></a>Protobuf 序列化</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">public <span class="token keyword">static</span> byte<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">Serialize</span><span class="token punctuation">(</span>Student stu<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    byte<span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> null<span class="token punctuation">;</span>
+    <span class="token function">using</span> <span class="token punctuation">(</span>MemoryStream ms <span class="token operator">=</span> new <span class="token function">MemoryStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        Serializer<span class="token punctuation">.</span><span class="token function">Serialize</span><span class="token punctuation">(</span>ms<span class="token punctuation">,</span> stu<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bytes <span class="token operator">=</span> new byte<span class="token punctuation">[</span>ms<span class="token punctuation">.</span>Length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Buffer<span class="token punctuation">.</span><span class="token function">BlockCopy</span><span class="token punctuation">(</span>ms<span class="token punctuation">.</span><span class="token function">GetBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> bytes<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>ms<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> bytes<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="Protobuf-反序列化"><a href="#Protobuf-反序列化" class="headerlink" title="Protobuf 反序列化"></a>Protobuf 反序列化</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static Student DeSerialize(byte[] bytes)
+&#123;
+    Student stu &#x3D; null;
+    using (MemoryStream ms &#x3D; new MemoryStream(bytes))
+    &#123;
+        stu &#x3D; Serializer.Deserialize&lt;Student&gt;(ms);
+    &#125;
+    return stu;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="Protobuf-读写文件"><a href="#Protobuf-读写文件" class="headerlink" title="Protobuf 读写文件"></a>Protobuf 读写文件</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 写入文件</span>
+<span class="token function">using</span><span class="token punctuation">(</span>FileStream file <span class="token operator">=</span> File<span class="token punctuation">.</span><span class="token function">Create</span><span class="token punctuation">(</span><span class="token string">"student.bytes"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    Serializer<span class="token punctuation">.</span><span class="token function">Serialize</span><span class="token punctuation">(</span>file<span class="token punctuation">,</span> student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 读取文件</span>
+<span class="token function">using</span><span class="token punctuation">(</span>FileStream file <span class="token operator">=</span> File<span class="token punctuation">.</span><span class="token function">OpenRead</span><span class="token punctuation">(</span><span class="token string">"student.bytes"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    Student newStu <span class="token operator">=</span> Serializer<span class="token punctuation">.</span>Deserialize<span class="token operator">&lt;</span>Student<span class="token operator">></span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>newStu<span class="token punctuation">.</span>address<span class="token punctuation">.</span>province<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -521,7 +578,7 @@ int main() &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://oxford561.github.io/2021/06/22/di-yi-ge-cpp-cheng-xu/">https://oxford561.github.io/2021/06/22/di-yi-ge-cpp-cheng-xu/</a>
+                    <a href="https://oxford561.github.io/2021/10/18/protobuf-de-ji-ben-shi-yong/">https://oxford561.github.io/2021/10/18/protobuf-de-ji-ben-shi-yong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -560,7 +617,7 @@ int main() &#123;
                         <div class="article-tag">
                             
                                 <a href="/tags/C/">
-                                    <span class="chip bg-color">C++</span>
+                                    <span class="chip bg-color">C#</span>
                                 </a>
                             
                         </div>
@@ -732,17 +789,18 @@ int main() &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/18/csharp-chang-gui-xu-lie-hua-fang-shi/">
+                <a href="/2021/10/18/protobuf-de-ji-ben-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="C# 常规序列化方式">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Protobuf 的基本使用">
                         
-                        <span class="card-title">C# 常规序列化方式</span>
+                        <span class="card-title">Protobuf 的基本使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -752,9 +810,9 @@ int main() &#123;
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-18
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-18
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -767,6 +825,7 @@ int main() &#123;
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -785,13 +844,13 @@ int main() &#123;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/06/21/you-yong-chu-chang-shi/">
+                <a href="/2021/10/18/csharp-chang-gui-xu-lie-hua-fang-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="游泳初尝试">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="C# 常规序列化方式">
                         
-                        <span class="card-title">游泳初尝试</span>
+                        <span class="card-title">C# 常规序列化方式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -802,14 +861,14 @@ int main() &#123;
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-06-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-18
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%94%9F%E6%B4%BB/" class="post-category">
-                                    生活
+                            <a href="/categories/%E6%8A%80%E6%9C%AF/" class="post-category">
+                                    技术
                                 </a>
                             
                             
@@ -819,8 +878,8 @@ int main() &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%97%A5%E8%AE%B0%E9%9A%8F%E7%AC%94/">
-                        <span class="chip bg-color">日记随笔</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C#</span>
                     </a>
                     
                 </div>
