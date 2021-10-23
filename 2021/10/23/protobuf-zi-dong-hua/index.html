@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Protobuf 的基本使用, 水聿津">
+    <meta name="keywords" content="Protobuf 自动化, 水聿津">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Protobuf 的基本使用 | 水聿津</title>
+    <title>Protobuf 自动化 | 水聿津</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Protobuf 的基本使用</h1>
+                    <h1 class="description center-align post-title">Protobuf 自动化</h1>
                 </div>
             </div>
         </div>
@@ -456,7 +456,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-18
+                    2021-10-23
                 </div>
                 
 
@@ -480,18 +480,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="什么是-Protobuf？"><a href="#什么是-Protobuf？" class="headerlink" title="什么是 Protobuf？"></a>什么是 Protobuf？</h2><blockquote>
-<p><em>Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据序列化，很适合做数据存储或 RPC 数据交换格式。它可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。</em></p>
-</blockquote>
-<h2 id="Protobuf-的优势"><a href="#Protobuf-的优势" class="headerlink" title="Protobuf 的优势"></a>Protobuf 的优势</h2><ul>
-<li>序列化和反序列化速度很快</li>
-<li>与语言平台无关，可以实现跨语言平台的数据转换</li>
-<li>数据能实现高强度的压缩，占用空间会很小</li>
-<li>扩展性和兼容性好，更新数据结构后也能兼容旧版本</li>
-</ul>
-<h2 id="Protobuf-的基本使用（protobuf-net版本）"><a href="#Protobuf-的基本使用（protobuf-net版本）" class="headerlink" title="Protobuf 的基本使用（protobuf-net版本）"></a>Protobuf 的基本使用（protobuf-net版本）</h2><p>Protobuf 有很多个语言版本，对于 C# 而言，没有采用 Google 的版本，使用的是 <a target="_blank" rel="noopener" href="https://github.com/protobuf-net/protobuf-net">protobuf-net</a> 。</p>
-<p>protobuf-net 是一个基于合约的 .NET 代码序列化器，它恰好以谷歌设计的“协议缓冲区”序列化格式写入数据。但是，该 API 与 Google 的非常不同，并且遵循典型的 .NET 模式（它在使用上具有广泛的可比性<code>XmlSerializer</code>，例如<code>DataContractSerializer</code>、 等）。它应该适用于大多数编写标准类型并可以使用属性的 .NET 语言。</p>
-<h2 id="Protobuf-对象"><a href="#Protobuf-对象" class="headerlink" title="Protobuf 对象"></a>Protobuf 对象</h2><p>相对于常规版序列化对象而言，Protobuf 针对对象添加了 「 ProtoContract」 标签，对于每个对象下的成员使用 「 ProtoMember」 标签，序号代表其所处的位置。</p>
+                <h2 id="Protobuf-标签问题"><a href="#Protobuf-标签问题" class="headerlink" title="Protobuf 标签问题"></a>Protobuf 标签问题</h2><p>之前有提到说，但凡序列化的对象都需要打上标签，像下面这种的。</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">[ProtoContract]
 [Serializable]
 class Student
@@ -514,44 +503,117 @@ class Address
 
 
 
-<h3 id="Protobuf-序列化"><a href="#Protobuf-序列化" class="headerlink" title="Protobuf 序列化"></a>Protobuf 序列化</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">public <span class="token keyword">static</span> byte<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">Serialize</span><span class="token punctuation">(</span>Student stu<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    byte<span class="token punctuation">[</span><span class="token punctuation">]</span> bytes <span class="token operator">=</span> null<span class="token punctuation">;</span>
-    <span class="token function">using</span> <span class="token punctuation">(</span>MemoryStream ms <span class="token operator">=</span> new <span class="token function">MemoryStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        Serializer<span class="token punctuation">.</span><span class="token function">Serialize</span><span class="token punctuation">(</span>ms<span class="token punctuation">,</span> stu<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        bytes <span class="token operator">=</span> new byte<span class="token punctuation">[</span>ms<span class="token punctuation">.</span>Length<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        Buffer<span class="token punctuation">.</span><span class="token function">BlockCopy</span><span class="token punctuation">(</span>ms<span class="token punctuation">.</span><span class="token function">GetBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> bytes<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>ms<span class="token punctuation">.</span>Length<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> bytes<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>不过对于这种手动打标签的方式，每次新增对象都去一个个添加标签是很繁琐的，而且也容易出现纰漏，那么有没有什么比较便捷的方式解决这样的情况呢？</p>
+<p>答案是有的，protobuf 提供了批处理序列化对象的方式。</p>
+<h2 id="Protobuf-自动化"><a href="#Protobuf-自动化" class="headerlink" title="Protobuf 自动化"></a>Protobuf 自动化</h2><h4 id="声明-proto-文件（定义协议格式）"><a href="#声明-proto-文件（定义协议格式）" class="headerlink" title="声明 proto 文件（定义协议格式）"></a>声明 proto 文件（定义协议格式）</h4><p>通过构建一个后缀为 .proto 的文件，里面填充关于所需要序列化对象的结构，比如 ProtoList.proto。</p>
+<pre class="line-numbers language-protobuf" data-language="protobuf"><code class="language-protobuf"><span class="token keyword">syntax</span><span class="token operator">=</span><span class="token string">"proto2"</span><span class="token punctuation">;</span>
 
+<span class="token keyword">package</span> Protocol<span class="token punctuation">;</span>
 
-
-<h3 id="Protobuf-反序列化"><a href="#Protobuf-反序列化" class="headerlink" title="Protobuf 反序列化"></a>Protobuf 反序列化</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static Student DeSerialize(byte[] bytes)
-&#123;
-    Student stu &#x3D; null;
-    using (MemoryStream ms &#x3D; new MemoryStream(bytes))
-    &#123;
-        stu &#x3D; Serializer.Deserialize&lt;Student&gt;(ms);
-    &#125;
-    return stu;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h3 id="Protobuf-读写文件"><a href="#Protobuf-读写文件" class="headerlink" title="Protobuf 读写文件"></a>Protobuf 读写文件</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 写入文件</span>
-<span class="token function">using</span><span class="token punctuation">(</span>FileStream file <span class="token operator">=</span> File<span class="token punctuation">.</span><span class="token function">Create</span><span class="token punctuation">(</span><span class="token string">"student.bytes"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    Serializer<span class="token punctuation">.</span><span class="token function">Serialize</span><span class="token punctuation">(</span>file<span class="token punctuation">,</span> student<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">message</span> <span class="token class-name">Address</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">required</span> <span class="token builtin">string</span> province <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">repeated</span> <span class="token builtin">string</span> testLst <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+	<span class="token keyword">optional</span> <span class="token builtin">string</span> other <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 
-<span class="token comment">// 读取文件</span>
-<span class="token function">using</span><span class="token punctuation">(</span>FileStream file <span class="token operator">=</span> File<span class="token punctuation">.</span><span class="token function">OpenRead</span><span class="token punctuation">(</span><span class="token string">"student.bytes"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    Student newStu <span class="token operator">=</span> Serializer<span class="token punctuation">.</span>Deserialize<span class="token operator">&lt;</span>Student<span class="token operator">></span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span>newStu<span class="token punctuation">.</span>address<span class="token punctuation">.</span>province<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">message</span> <span class="token class-name">Student</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">required</span> <span class="token builtin">string</span> name <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">required</span> <span class="token builtin">int32</span> age <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+	<span class="token keyword">required</span> <span class="token positional-class-name class-name">Address</span> address <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>syntax 代表着使用的是 proto2 的语法，目前 protobuf 已经有了 proto3 的语法，但是 proto2 的语法范围更广一点。</p>
+<p>package 对于C#来说，这个协议封装在 Protocol 命名空间中，后续使用这里面的对象时需要先引入这个命名空间。</p>
+<p>message 是包含一系列类型字段的集合，protobuf 提供了一些简单的数据类型，包括：</p>
+<ul>
+<li>bool</li>
+<li>int32</li>
+<li>float</li>
+<li>double</li>
+<li>string</li>
+</ul>
+<p>当然也存在其它类型，比如代码中 Address 也可以作为 Student 的数据类型，在数据类型后面的 =1、=2 表示的当前 message 的顺位。</p>
+<p>对于数据类型前面的修饰符，protobuf 大体提供下面几种：</p>
+<ul>
+<li>required：这是是必须提供的，声明了就必须有的字段</li>
+<li>optional：表示可选的字段，也就是可以没有数据</li>
+<li>repeated：这个字段表示可以重复任意次数，可作为 List 使用</li>
+</ul>
+<h4 id="编译-proto-文件"><a href="#编译-proto-文件" class="headerlink" title="编译 .proto 文件"></a>编译 .proto 文件</h4><p>咱们已经创建了一个 .proto 文件，    下面就需要调用 protobuf 提供的编译工具对这个文件进行处理，得到我们需要的 C# 序列化对象脚本。</p>
+<p>关于获取 protobuf 提供的编译工具，可以到 <a target="_blank" rel="noopener" href="https://github.com/protobuf-net/protobuf-net">protobuf-net</a> github 地址获取源码，从里面获取 protoc.exe 以及 protogen.zip（针对windows平台）里面的东西。</p>
+<p>获取到 protobuf 的编译工具 protoc 以及 protogen ，然后就是使用命令行针对 .proto 文件进行处理。</p>
+<p>调用工具命令生成，进入到能够访问工具的地址，执行下面命令（protoc 命令也是可以的）：</p>
+<blockquote>
+<p>protogen.exe –csharp_out=outPath ProtoList.proto</p>
+</blockquote>
+<blockquote>
+<p>protogen.exe “生成C#语言协议”=“生成的路径” 需要的协议模板</p>
+</blockquote>
+<p>执行完命令后会生成一个 C# 脚本文件，里面展示着之前声明的协议结构（不需要人工修改，有更改再直接生成）</p>
+<pre class="line-numbers language-proto" data-language="proto"><code class="language-proto">&#x2F;&#x2F; This file was generated by a tool; you should avoid making direct changes.
+&#x2F;&#x2F; Consider using &#39;partial classes&#39; to extend these types
+&#x2F;&#x2F; Input: ProtoList.proto
+
+#pragma warning disable CS1591, CS0612, CS3021, IDE1006
+namespace Protocol
+&#123;
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class Address : global::ProtoBuf.IExtensible
+    &#123;
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            &#x3D;&gt; global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name &#x3D; @&quot;province&quot;, IsRequired &#x3D; true)]
+        public string Province &#123; get; set; &#125;
+
+        [global::ProtoBuf.ProtoMember(2, Name &#x3D; @&quot;testLst&quot;)]
+        public global::System.Collections.Generic.List&lt;string&gt; testLsts &#123; get; &#125; &#x3D; new global::System.Collections.Generic.List&lt;string&gt;();
+
+        [global::ProtoBuf.ProtoMember(3, Name &#x3D; @&quot;other&quot;)]
+        [global::System.ComponentModel.DefaultValue(&quot;&quot;)]
+        public string Other
+        &#123;
+            get &#123; return __pbn__Other ?? &quot;&quot;; &#125;
+            set &#123; __pbn__Other &#x3D; value; &#125;
+        &#125;
+        public bool ShouldSerializeOther() &#x3D;&gt; __pbn__Other !&#x3D; null;
+        public void ResetOther() &#x3D;&gt; __pbn__Other &#x3D; null;
+        private string __pbn__Other;
+
+    &#125;
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class Student : global::ProtoBuf.IExtensible
+    &#123;
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            &#x3D;&gt; global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name &#x3D; @&quot;name&quot;, IsRequired &#x3D; true)]
+        public string Name &#123; get; set; &#125;
+
+        [global::ProtoBuf.ProtoMember(2, Name &#x3D; @&quot;age&quot;, IsRequired &#x3D; true)]
+        public int Age &#123; get; set; &#125;
+
+        [global::ProtoBuf.ProtoMember(3, Name &#x3D; @&quot;address&quot;, IsRequired &#x3D; true)]
+        public Address Address &#123; get; set; &#125;
+
+    &#125;
+
+&#125;
+
+#pragma warning restore CS1591, CS0612, CS3021, IDE1006
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>生成协议的过程中，命令提示框会显示相关信息，如果 .proto 文件编写有错误也会在生成的时候显示出来，解决书写错误才能最终生成协议文件。</p>
+<p>上述的生成C#协议文件，如果觉得命令敲得不方便，可以采用批处理的方式，将命令写进批处理程序中。</p>
+<p><i>生成后的协议对象属性基本都是大写开头…</i></p>
 
                 
             </div>
@@ -578,7 +640,7 @@ class Address
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://oxford561.github.io/2021/10/18/protobuf-de-ji-ben-shi-yong/">https://oxford561.github.io/2021/10/18/protobuf-de-ji-ben-shi-yong/</a>
+                    <a href="https://oxford561.github.io/2021/10/23/protobuf-zi-dong-hua/">https://oxford561.github.io/2021/10/23/protobuf-zi-dong-hua/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -789,9 +851,10 @@ class Address
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/10/23/protobuf-zi-dong-hua/">
                     <div class="card-image">
@@ -809,9 +872,9 @@ class Address
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -824,6 +887,7 @@ class Address
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -842,13 +906,13 @@ class Address
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/18/csharp-chang-gui-xu-lie-hua-fang-shi/">
+                <a href="/2021/10/18/protobuf-de-ji-ben-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="C# 常规序列化方式">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Protobuf 的基本使用">
                         
-                        <span class="card-title">C# 常规序列化方式</span>
+                        <span class="card-title">Protobuf 的基本使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
