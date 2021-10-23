@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Protobuf 自动化, 水聿津">
+    <meta name="keywords" content="Leetcode学习-原地修改数组, 水聿津">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Protobuf 自动化 | 水聿津</title>
+    <title>Leetcode学习-原地修改数组 | 水聿津</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Protobuf 自动化</h1>
+                    <h1 class="description center-align post-title">Leetcode学习-原地修改数组</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C#</span>
+                            <a href="/tags/Leetcode/">
+                                <span class="chip bg-color">Leetcode</span>
                             </a>
                         
                     </div>
@@ -480,140 +480,58 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="Protobuf-标签问题"><a href="#Protobuf-标签问题" class="headerlink" title="Protobuf 标签问题"></a>Protobuf 标签问题</h2><p>之前有提到说，但凡序列化的对象都需要打上标签，像下面这种的。</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">[ProtoContract]
-[Serializable]
-class Student
-&#123;
-    [ProtoMember(1)]
-    public string name;
-    [ProtoMember(2)]
-    public int age;
-    [ProtoMember(3)]
-    public Address address;
-&#125;
-
-[ProtoContract]
-[Serializable]
-class Address
-&#123;
-    [ProtoMember(1)]
-    public string province;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>不过对于这种手动打标签的方式，每次新增对象都去一个个添加标签是很繁琐的，而且也容易出现纰漏，那么有没有什么比较便捷的方式解决这样的情况呢？</p>
-<p>答案是有的，protobuf 提供了批处理序列化对象的方式。</p>
-<h2 id="Protobuf-自动化"><a href="#Protobuf-自动化" class="headerlink" title="Protobuf 自动化"></a>Protobuf 自动化</h2><h4 id="声明-proto-文件（定义协议格式）"><a href="#声明-proto-文件（定义协议格式）" class="headerlink" title="声明 proto 文件（定义协议格式）"></a>声明 proto 文件（定义协议格式）</h4><p>通过构建一个后缀为 .proto 的文件，里面填充关于所需要序列化对象的结构，比如 ProtoList.proto。</p>
-<pre class="line-numbers language-protobuf" data-language="protobuf"><code class="language-protobuf"><span class="token keyword">syntax</span><span class="token operator">=</span><span class="token string">"proto2"</span><span class="token punctuation">;</span>
-
-<span class="token keyword">package</span> Protocol<span class="token punctuation">;</span>
-
-<span class="token keyword">message</span> <span class="token class-name">Address</span><span class="token punctuation">&#123;</span>
-	<span class="token keyword">required</span> <span class="token builtin">string</span> province <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token keyword">repeated</span> <span class="token builtin">string</span> testLst <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-	<span class="token keyword">optional</span> <span class="token builtin">string</span> other <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span class="token keyword">message</span> <span class="token class-name">Student</span><span class="token punctuation">&#123;</span>
-	<span class="token keyword">required</span> <span class="token builtin">string</span> name <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token keyword">required</span> <span class="token builtin">int32</span> age <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-	<span class="token keyword">required</span> <span class="token positional-class-name class-name">Address</span> address <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span>
-
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>syntax 代表着使用的是 proto2 的语法，目前 protobuf 已经有了 proto3 的语法，但是 proto2 的语法范围更广一点。</p>
-<p>package 对于C#来说，这个协议封装在 Protocol 命名空间中，后续使用这里面的对象时需要先引入这个命名空间。</p>
-<p>message 是包含一系列类型字段的集合，protobuf 提供了一些简单的数据类型，包括：</p>
-<ul>
-<li>bool</li>
-<li>int32</li>
-<li>float</li>
-<li>double</li>
-<li>string</li>
-</ul>
-<p>当然也存在其它类型，比如代码中 Address 也可以作为 Student 的数据类型，在数据类型后面的 =1、=2 表示的当前 message 的顺位。</p>
-<p>对于数据类型前面的修饰符，protobuf 大体提供下面几种：</p>
-<ul>
-<li>required：这是是必须提供的，声明了就必须有的字段</li>
-<li>optional：表示可选的字段，也就是可以没有数据</li>
-<li>repeated：这个字段表示可以重复任意次数，可作为 List 使用</li>
-</ul>
-<h4 id="编译-proto-文件"><a href="#编译-proto-文件" class="headerlink" title="编译 .proto 文件"></a>编译 .proto 文件</h4><p>咱们已经创建了一个 .proto 文件，    下面就需要调用 protobuf 提供的编译工具对这个文件进行处理，得到我们需要的 C# 序列化对象脚本。</p>
-<p>关于获取 protobuf 提供的编译工具，可以到 <a target="_blank" rel="noopener" href="https://github.com/protobuf-net/protobuf-net">protobuf-net</a> github 地址获取源码，从里面获取 protoc.exe 以及 protogen.zip（针对windows平台）里面的东西。</p>
-<p>获取到 protobuf 的编译工具 protoc 以及 protogen ，然后就是使用命令行针对 .proto 文件进行处理。</p>
-<p>调用工具命令生成，进入到能够访问工具的地址，执行下面命令（protoc 命令也是可以的）：</p>
-<blockquote>
-<p>protogen.exe –csharp_out=outPath ProtoList.proto</p>
+                <blockquote>
+<p>原地修改数组，避免数据的搬移</p>
 </blockquote>
-<blockquote>
-<p>protogen.exe “生成C#语言协议”=“生成的路径” 需要的协议模板</p>
-</blockquote>
-<p>执行完命令后会生成一个 C# 脚本文件，里面展示着之前声明的协议结构（不需要人工修改，有更改再直接生成）</p>
-<pre class="line-numbers language-proto" data-language="proto"><code class="language-proto">&#x2F;&#x2F; This file was generated by a tool; you should avoid making direct changes.
-&#x2F;&#x2F; Consider using &#39;partial classes&#39; to extend these types
-&#x2F;&#x2F; Input: ProtoList.proto
-
-#pragma warning disable CS1591, CS0612, CS3021, IDE1006
-namespace Protocol
+<h2 id="1、有序链表去重"><a href="#1、有序链表去重" class="headerlink" title="1、有序链表去重"></a>1、<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/">有序链表去重</a></h2><h3 id="1-1-声明链表结构"><a href="#1-1-声明链表结构" class="headerlink" title="1.1 声明链表结构"></a>1.1 声明链表结构</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public class ListNode
 &#123;
+      public int val;
+      public ListNode next;
+      public ListNode(int val&#x3D;0, ListNode next&#x3D;null) 
+      &#123;
+          this.val &#x3D; val;
+          this.next &#x3D; next;
+      &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    [global::ProtoBuf.ProtoContract()]
-    public partial class Address : global::ProtoBuf.IExtensible
-    &#123;
-        private global::ProtoBuf.IExtension __pbn__extensionData;
-        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-            &#x3D;&gt; global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name &#x3D; @&quot;province&quot;, IsRequired &#x3D; true)]
-        public string Province &#123; get; set; &#125;
 
-        [global::ProtoBuf.ProtoMember(2, Name &#x3D; @&quot;testLst&quot;)]
-        public global::System.Collections.Generic.List&lt;string&gt; testLsts &#123; get; &#125; &#x3D; new global::System.Collections.Generic.List&lt;string&gt;();
-
-        [global::ProtoBuf.ProtoMember(3, Name &#x3D; @&quot;other&quot;)]
-        [global::System.ComponentModel.DefaultValue(&quot;&quot;)]
-        public string Other
+<h3 id="1-2-去重函数"><a href="#1-2-去重函数" class="headerlink" title="1.2 去重函数"></a>1.2 去重函数</h3><p>原地修改的话，也就不能再产生新的容器进行数据的存储，只能在原先的数据结构中进行数据的修改，这里采用快慢指针的方式进行链表元素的遍历.</p>
+<p>fast 指针快速遍历整个链表，遇到不重复的元素就通知 slow 指针前进，最后 fast 指针遍历完成则去重任务也就完成了。</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public ListNode DeleteDuplicates(ListNode head) &#123;
+    if (head &#x3D;&#x3D; null) return null;
+    ListNode slow, fast;
+    slow &#x3D; head;
+    fast &#x3D; head;
+    while(fast !&#x3D; null)
+    &#123;   
+        if(fast.val !&#x3D; slow.val)
         &#123;
-            get &#123; return __pbn__Other ?? &quot;&quot;; &#125;
-            set &#123; __pbn__Other &#x3D; value; &#125;
+            slow.next &#x3D; fast;
+            slow &#x3D; slow.next;
         &#125;
-        public bool ShouldSerializeOther() &#x3D;&gt; __pbn__Other !&#x3D; null;
-        public void ResetOther() &#x3D;&gt; __pbn__Other &#x3D; null;
-        private string __pbn__Other;
-
+        fast &#x3D; fast.next;
     &#125;
+    slow.next &#x3D; null;
+    return head;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    [global::ProtoBuf.ProtoContract()]
-    public partial class Student : global::ProtoBuf.IExtensible
-    &#123;
-        private global::ProtoBuf.IExtension __pbn__extensionData;
-        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-            &#x3D;&gt; global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name &#x3D; @&quot;name&quot;, IsRequired &#x3D; true)]
-        public string Name &#123; get; set; &#125;
 
-        [global::ProtoBuf.ProtoMember(2, Name &#x3D; @&quot;age&quot;, IsRequired &#x3D; true)]
-        public int Age &#123; get; set; &#125;
 
-        [global::ProtoBuf.ProtoMember(3, Name &#x3D; @&quot;address&quot;, IsRequired &#x3D; true)]
-        public Address Address &#123; get; set; &#125;
 
+<h2 id="2、移除元素"><a href="#2、移除元素" class="headerlink" title="2、移除元素"></a>2、<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-element/">移除元素</a></h2><p>输入：nums = [3,2,2,3], val = 3 输出：2, nums = [2,2]</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public int RemoveElement(int[] nums, int val) &#123;
+    int fast &#x3D; 0, slow &#x3D; 0;
+    while (fast &lt; nums.Length) &#123;
+        if (nums[fast] !&#x3D; val) &#123;
+            nums[slow] &#x3D; nums[fast];
+            slow++;
+        &#125;
+        fast++;
     &#125;
-
-&#125;
-
-#pragma warning restore CS1591, CS0612, CS3021, IDE1006
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>生成协议的过程中，命令提示框会显示相关信息，如果 .proto 文件编写有错误也会在生成的时候显示出来，解决书写错误才能最终生成协议文件。</p>
-<p>上述的生成C#协议文件，如果觉得命令敲得不方便，可以采用批处理的方式，将命令写进批处理程序中。</p>
-<p><i>生成后的协议对象属性基本都是大写开头…</i></p>
+    return slow;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -640,7 +558,7 @@ namespace Protocol
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://oxford561.github.io/2021/10/23/protobuf-zi-dong-hua/">https://oxford561.github.io/2021/10/23/protobuf-zi-dong-hua/</a>
+                    <a href="https://oxford561.github.io/2021/10/23/leetcode-xue-xi-yuan-di-xiu-gai-shu-zu/">https://oxford561.github.io/2021/10/23/leetcode-xue-xi-yuan-di-xiu-gai-shu-zu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -678,8 +596,8 @@ namespace Protocol
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C#</span>
+                                <a href="/tags/Leetcode/">
+                                    <span class="chip bg-color">Leetcode</span>
                                 </a>
                             
                         </div>
@@ -855,13 +773,13 @@ namespace Protocol
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/23/leetcode-xue-xi-yuan-di-xiu-gai-shu-zu/">
+                <a href="/2021/10/23/leetcode-xue-xi-qian-zhui-he/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Leetcode学习-原地修改数组">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Leetcode学习-前缀和">
                         
-                        <span class="card-title">Leetcode学习-原地修改数组</span>
+                        <span class="card-title">Leetcode学习-前缀和</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -904,13 +822,13 @@ namespace Protocol
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/18/protobuf-de-ji-ben-shi-yong/">
+                <a href="/2021/10/23/protobuf-zi-dong-hua/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Protobuf 的基本使用">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Protobuf 自动化">
                         
-                        <span class="card-title">Protobuf 的基本使用</span>
+                        <span class="card-title">Protobuf 自动化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -921,7 +839,7 @@ namespace Protocol
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
                             </span>
                         <span class="publish-author">
                             
