@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="二分搜索算法, 水聿津">
+    <meta name="keywords" content="Leetcode学习-链表的环与相交, 水聿津">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>二分搜索算法 | 水聿津</title>
+    <title>Leetcode学习-链表的环与相交 | 水聿津</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">二分搜索算法</h1>
+                    <h1 class="description center-align post-title">Leetcode学习-链表的环与相交</h1>
                 </div>
             </div>
         </div>
@@ -456,7 +456,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-23
+                    2021-10-27
                 </div>
                 
 
@@ -480,102 +480,55 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="什么是二分搜索"><a href="#什么是二分搜索" class="headerlink" title="什么是二分搜索"></a>什么是二分搜索</h3><p>二分搜索也称折半查找，是一种基于有序数组的查找特定元素的搜索算法。</p>
-<p>搜索的过程是在有序数组的中间开始的，如果中间的元素刚好是我们希望查找到的元素，则提前搜索结束，返回元素的位置下标即可；如果我们查找的元素大于中间元素，则在数组大于中间元素的一半继续查找，同样的要是我们查找的元素小于中间元素，则在数组小于中间元素的一半继续查找。最后查找完数组的所有空间还没有返回特定元素的下标则代表没有查找到。</p>
-<p>二分搜索算法每一次的查找都会缩小搜索范围的一半，以更快的速度进行查找。</p>
-<h3 id="基础的二分搜索"><a href="#基础的二分搜索" class="headerlink" title="基础的二分搜索"></a>基础的二分搜索</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static int BinarySearch(int[] nums, int target)
+                <h3 id="链表结构"><a href="#链表结构" class="headerlink" title="链表结构"></a>链表结构</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public class ListNode
 &#123;
-    int left &#x3D; 0;
-    int right &#x3D; nums.Length - 1;
-    int mid &#x3D; 0;
-    while (left &lt;&#x3D; right)
+    public int val;
+    public ListNode next;
+    public ListNode(int val &#x3D; 0, ListNode next &#x3D; null)
     &#123;
-        mid &#x3D; left + (right - left) &#x2F; 2;&#x2F;&#x2F; 防止溢出
+        this.val &#x3D; val;
+        this.next &#x3D; next;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-        if (nums[mid] &#x3D;&#x3D; target)
+<h3 id="链表是否包含环"><a href="#链表是否包含环" class="headerlink" title="链表是否包含环"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle/">链表是否包含环</a></h3><h4 id="什么是链表的环"><a href="#什么是链表的环" class="headerlink" title="什么是链表的环"></a>什么是链表的环</h4><p>链表中环的结构字面意思就是在链表的结构中，末尾链表节点不再指向空对象，而是让末尾链表节点指向其它节点，使得整体的链表结构不再是一条顺序的线，而变成了一个环形的状态。</p>
+<p>判断链表中是否存在环的情况，解决方案也是使用的快慢指针，依照上次说过的寻找链表中点的代码逻辑，检测链表中的是否存在环，也只不过在遍历链表的时候调整下判断条件即可，如下：</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static bool hasCycle(ListNode head)
+&#123;
+    ListNode slow &#x3D; head;
+    ListNode fast &#x3D; head;
+    while(fast !&#x3D; null &amp;&amp; fast.next !&#x3D; null)
+    &#123;
+        slow &#x3D; slow.next;
+        fast &#x3D; fast.next.next;
+        if(fast &#x3D;&#x3D; slow)
         &#123;
-            return mid;
-        &#125;
-        else if (nums[mid] &gt; target)
-        &#123;
-            right &#x3D; mid - 1;
-        &#125;
-        else if (nums[mid] &lt; target)
-        &#123;
-            left &#x3D; mid + 1;
+            return true;
         &#125;
     &#125;
-    return -1;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    return false;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>这里的二分搜索代码中，需要注意的有以下几点：</p>
-<ul>
-<li>right 的赋值是 nums.Length - 1,而不是 数组的长度    </li>
-<li>while 循环中的条件是 &lt;=  而不是 &lt;（前者查遍所有元素，后者会遗漏元素）</li>
-<li>mid的赋值是这样的，mid = left + (right - left) / 2，为的就是防止（left+right）数值溢出</li>
-<li>left 和 right 的赋值是 mid + 1 以及 mid - 1（因为 mid 已经搜索过了）</li>
-</ul>
-<h3 id="寻找左边界的二分搜索"><a href="#寻找左边界的二分搜索" class="headerlink" title="寻找左边界的二分搜索"></a>寻找左边界的二分搜索</h3><p>有序数组中的元素并不是没有重复元素，如果在使用二分搜索的时候遇到重复元素，如何定位具体要求下的位置，这对于基础的二分搜索就有更高要求了。</p>
-<p>寻找左边界的二分搜索，就是能够查找到重复元素最左边的位置。</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static int BinarySearchLeft(int[] nums,int target)
+
+
+<h3 id="链表是否相交"><a href="#链表是否相交" class="headerlink" title="链表是否相交"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/">链表是否相交</a></h3><p>链表相交指的是多个链表的节点中存在汇聚的节点，使得多个链表最终汇集到一起，形象化理解就是多条小河流汇集到一条大河流的感觉。但是要解决这类相交问题，比较麻烦的一点是多个链表的长度是不一样的，无法直接通过遍历链表的方式得到相交的节点，节点之间也不一一对应。</p>
+<p>当然处理链表中节点是否相同，其实直接用 HashSet（不重复元素集合）去收集链表节点对象，然后逐一对照就能得到答案。不过除去这种使用额外空间的方式，还有更直接的方式嘛。</p>
+<p>确实是有的，解决问题的关键在于，通过某种方式让多个链表的节点能够在遍历的时候同时到达相交的节点。这里的解决方式就是，让这 2 个（多个）链表进行拼接，使得最后产生 2 个（多个）节点数目相同的链表，再进行逐一遍历即可。</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static ListNode GetIntersectionNode(ListNode headA,ListNode headB)
 &#123;
-    int left &#x3D; 0;
-    int right &#x3D; nums.Length - 1;
-    int mid &#x3D; 0;
-    while (left &lt;&#x3D; right)
+    &#x2F;&#x2F; p1 指向 A 链表头结点，p2 指向 B 链表头结点
+    ListNode p1 &#x3D; headA, p2 &#x3D; headB;
+    while (p1 !&#x3D; p2)
     &#123;
-        mid &#x3D; left + (right - left) &#x2F; 2;&#x2F;&#x2F; 防止溢出
-
-        if (nums[mid] &#x3D;&#x3D; target)
-        &#123;
-            right &#x3D; mid - 1;
-        &#125;
-        else if (nums[mid] &gt; target)
-        &#123;
-            right &#x3D; mid - 1;
-        &#125;
-        else if (nums[mid] &lt; target)
-        &#123;
-            left &#x3D; mid + 1;
-        &#125;
+        &#x2F;&#x2F; p1 走一步，如果走到 A 链表末尾，转到 B 链表
+        if (p1 &#x3D;&#x3D; null) p1 &#x3D; headB;
+        else p1 &#x3D; p1.next;
+        &#x2F;&#x2F; p2 走一步，如果走到 B 链表末尾，转到 A 链表
+        if (p2 &#x3D;&#x3D; null) p2 &#x3D; headA;
+        else p2 &#x3D; p2.next;
     &#125;
-
-    &#x2F;&#x2F; 最后要检查 left 越界的情况
-    if (left &gt;&#x3D; nums.Length || nums[left] !&#x3D; target)
-        return -1;
-    return left;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>上述代码大体和基础的二分搜索代码差不多，只不过在查找到特定元素后，不是直接返回特定元素的位置，而是将搜索范围进一步缩小开始继续搜索，直至找到最左边的元素位置。（注意 left 的越界情况）</p>
-<h3 id="寻找右边界的二分搜索"><a href="#寻找右边界的二分搜索" class="headerlink" title="寻找右边界的二分搜索"></a>寻找右边界的二分搜索</h3><p>有边界搜索问题和左边界搜索是差不多的，就不赘述了。</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static int BinarySearchRight(int[] nums, int target)
-&#123;
-    int left &#x3D; 0;
-    int right &#x3D; nums.Length - 1;
-    int mid &#x3D; 0;
-    while (left &lt;&#x3D; right)
-    &#123;
-        mid &#x3D; left + (right - left) &#x2F; 2;&#x2F;&#x2F; 防止溢出
-
-        if (nums[mid] &#x3D;&#x3D; target)
-        &#123;
-            left &#x3D; mid + 1;
-        &#125;
-        else if (nums[mid] &gt; target)
-        &#123;
-            right &#x3D; mid - 1;
-        &#125;
-        else if (nums[mid] &lt; target)
-        &#123;
-            left &#x3D; mid + 1;
-        &#125;
-    &#125;
-
-    &#x2F;&#x2F; 最后要检查 right 越界的情况
-    if (right &lt; 0 || nums[right] !&#x3D; target)
-        return -1;
-    return right;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    return p1;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -602,7 +555,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://oxford561.github.io/2021/10/23/leetcode-xue-xi-er-fen-sou-suo-suan-fa/">https://oxford561.github.io/2021/10/23/leetcode-xue-xi-er-fen-sou-suo-suan-fa/</a>
+                    <a href="https://oxford561.github.io/2021/10/27/leetcode-xue-xi-lian-biao-de-huan-yu-xiang-jiao/">https://oxford561.github.io/2021/10/27/leetcode-xue-xi-lian-biao-de-huan-yu-xiang-jiao/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -817,13 +770,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/10/27/leetcode-xue-xi-cha-zhao-lian-biao-yuan-su/">
+                <a href="/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Leetcode学习-查找链表元素">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Leetcode学习-滑动窗口">
                         
-                        <span class="card-title">Leetcode学习-查找链表元素</span>
+                        <span class="card-title">Leetcode学习-滑动窗口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -866,13 +819,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/23/leetcode-xue-xi-hui-wen-chuan-de-pan-duan/">
+                <a href="/2021/10/27/leetcode-xue-xi-cha-zhao-lian-biao-yuan-su/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Leetcode学习-回文串的判断">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Leetcode学习-查找链表元素">
                         
-                        <span class="card-title">Leetcode学习-回文串的判断</span>
+                        <span class="card-title">Leetcode学习-查找链表元素</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -883,7 +836,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
                             </span>
                         <span class="publish-author">
                             

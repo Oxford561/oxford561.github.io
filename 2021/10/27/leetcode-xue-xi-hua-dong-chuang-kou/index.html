@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="二分搜索算法, 水聿津">
+    <meta name="keywords" content="Leetcode学习-滑动窗口, 水聿津">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>二分搜索算法 | 水聿津</title>
+    <title>Leetcode学习-滑动窗口 | 水聿津</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">二分搜索算法</h1>
+                    <h1 class="description center-align post-title">Leetcode学习-滑动窗口</h1>
                 </div>
             </div>
         </div>
@@ -456,7 +456,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-23
+                    2021-10-27
                 </div>
                 
 
@@ -480,102 +480,206 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="什么是二分搜索"><a href="#什么是二分搜索" class="headerlink" title="什么是二分搜索"></a>什么是二分搜索</h3><p>二分搜索也称折半查找，是一种基于有序数组的查找特定元素的搜索算法。</p>
-<p>搜索的过程是在有序数组的中间开始的，如果中间的元素刚好是我们希望查找到的元素，则提前搜索结束，返回元素的位置下标即可；如果我们查找的元素大于中间元素，则在数组大于中间元素的一半继续查找，同样的要是我们查找的元素小于中间元素，则在数组小于中间元素的一半继续查找。最后查找完数组的所有空间还没有返回特定元素的下标则代表没有查找到。</p>
-<p>二分搜索算法每一次的查找都会缩小搜索范围的一半，以更快的速度进行查找。</p>
-<h3 id="基础的二分搜索"><a href="#基础的二分搜索" class="headerlink" title="基础的二分搜索"></a>基础的二分搜索</h3><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static int BinarySearch(int[] nums, int target)
-&#123;
-    int left &#x3D; 0;
-    int right &#x3D; nums.Length - 1;
-    int mid &#x3D; 0;
-    while (left &lt;&#x3D; right)
-    &#123;
-        mid &#x3D; left + (right - left) &#x2F; 2;&#x2F;&#x2F; 防止溢出
-
-        if (nums[mid] &#x3D;&#x3D; target)
-        &#123;
-            return mid;
-        &#125;
-        else if (nums[mid] &gt; target)
-        &#123;
-            right &#x3D; mid - 1;
-        &#125;
-        else if (nums[mid] &lt; target)
-        &#123;
-            left &#x3D; mid + 1;
-        &#125;
-    &#125;
-    return -1;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这里的二分搜索代码中，需要注意的有以下几点：</p>
+                <h3 id="什么是滑动窗口"><a href="#什么是滑动窗口" class="headerlink" title="什么是滑动窗口"></a>什么是滑动窗口</h3><p>滑动窗口也就是之前说过的双指针技巧，通过维护一个窗口，不断滑动，然后更新结果，其主要的应用场景就是在字符串的匹配上了，比如最小覆盖子串、最长无重复子串等。</p>
+<p>滑动窗口的算法上确实维护着一个窗口，可实际理解起来还是有点麻烦，不过按照步骤划分的话也就如下的几步：</p>
 <ul>
-<li>right 的赋值是 nums.Length - 1,而不是 数组的长度    </li>
-<li>while 循环中的条件是 &lt;=  而不是 &lt;（前者查遍所有元素，后者会遗漏元素）</li>
-<li>mid的赋值是这样的，mid = left + (right - left) / 2，为的就是防止（left+right）数值溢出</li>
-<li>left 和 right 的赋值是 mid + 1 以及 mid - 1（因为 mid 已经搜索过了）</li>
+<li>首先我们依旧通过声明双指针 left = right = 0。</li>
+<li> right ++ ，不断遍历源字符串，直到遍历过的字符串（窗口）中已经找到覆盖需要匹配的字符串要求(或者满足某种条件)</li>
+<li>然后 left++，缩小【left,right）的窗口，直到窗口中的字符串不符合匹配的字符串要求</li>
+<li>重复 2 和 3，直到遍历完整个字符串</li>
 </ul>
-<h3 id="寻找左边界的二分搜索"><a href="#寻找左边界的二分搜索" class="headerlink" title="寻找左边界的二分搜索"></a>寻找左边界的二分搜索</h3><p>有序数组中的元素并不是没有重复元素，如果在使用二分搜索的时候遇到重复元素，如何定位具体要求下的位置，这对于基础的二分搜索就有更高要求了。</p>
-<p>寻找左边界的二分搜索，就是能够查找到重复元素最左边的位置。</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static int BinarySearchLeft(int[] nums,int target)
+<h3 id="最短覆盖子串"><a href="#最短覆盖子串" class="headerlink" title="最短覆盖子串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-window-substring/">最短覆盖子串</a></h3><blockquote>
+<pre class="line-numbers language-none"><code class="language-none">输入：s &#x3D; &quot;ADOBECODEBANC&quot;, t &#x3D; &quot;ABC&quot;
+输出：&quot;BANC&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</blockquote>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">&#x2F;&#x2F; 滑动窗口（最小覆盖子串）  “AD0BEC0DEBANC”  “ABC”
+public static string MinWindow(string srcStr, string patter)
 &#123;
-    int left &#x3D; 0;
-    int right &#x3D; nums.Length - 1;
-    int mid &#x3D; 0;
-    while (left &lt;&#x3D; right)
+    &#x2F;&#x2F; 存储 需要识别的子串（A:1,B:1,C:1）
+    Dictionary&lt;char, int&gt; need &#x3D; new Dictionary&lt;char, int&gt;();
+    &#x2F;&#x2F; 滑动窗口中的字符串(A:2,B:1,C:2)
+    Dictionary&lt;char, int&gt; window &#x3D; new Dictionary&lt;char, int&gt;();
+    &#x2F;&#x2F; 拿到需要识别的子串数据
+    foreach (char c in patter)
     &#123;
-        mid &#x3D; left + (right - left) &#x2F; 2;&#x2F;&#x2F; 防止溢出
-
-        if (nums[mid] &#x3D;&#x3D; target)
+        if (need.ContainsKey(c))
         &#123;
-            right &#x3D; mid - 1;
+            need[c]++;
         &#125;
-        else if (nums[mid] &gt; target)
+        else
         &#123;
-            right &#x3D; mid - 1;
-        &#125;
-        else if (nums[mid] &lt; target)
-        &#123;
-            left &#x3D; mid + 1;
+            need.Add(c, 1);
         &#125;
     &#125;
 
-    &#x2F;&#x2F; 最后要检查 left 越界的情况
-    if (left &gt;&#x3D; nums.Length || nums[left] !&#x3D; target)
-        return -1;
-    return left;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>上述代码大体和基础的二分搜索代码差不多，只不过在查找到特定元素后，不是直接返回特定元素的位置，而是将搜索范围进一步缩小开始继续搜索，直至找到最左边的元素位置。（注意 left 的越界情况）</p>
-<h3 id="寻找右边界的二分搜索"><a href="#寻找右边界的二分搜索" class="headerlink" title="寻找右边界的二分搜索"></a>寻找右边界的二分搜索</h3><p>有边界搜索问题和左边界搜索是差不多的，就不赘述了。</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static int BinarySearchRight(int[] nums, int target)
-&#123;
     int left &#x3D; 0;
-    int right &#x3D; nums.Length - 1;
-    int mid &#x3D; 0;
-    while (left &lt;&#x3D; right)
+    int right &#x3D; 0;
+    int valid &#x3D; 0;
+    int start &#x3D; 0;
+    int len &#x3D; int.MaxValue;
+    while(right &lt; srcStr.Length)
     &#123;
-        mid &#x3D; left + (right - left) &#x2F; 2;&#x2F;&#x2F; 防止溢出
+        char c &#x3D; srcStr[right];
+        &#x2F;&#x2F; 右移窗口
+        right++;
+        &#x2F;&#x2F; 获取窗口中的符合 识别子串的字符进行缓存
+        if(need.ContainsKey(c))
+        &#123;
+            if (window.ContainsKey(c))
+            &#123;
+                window[c]++;
+            &#125;
+            else
+            &#123;
+                window.Add(c, 1);
+            &#125;
+            &#x2F;&#x2F; 符合一个就计数1个
+            if (window[c] &#x3D;&#x3D; need[c])
+            &#123;
+                valid++;
+            &#125;
+        &#125;
 
-        if (nums[mid] &#x3D;&#x3D; target)
+        &#x2F;&#x2F; 这个时候已经找到了覆盖子串的字符串窗口进行左移缩小窗口
+        while(valid &#x3D;&#x3D; need.Count)&#x2F;&#x2F;存在重复的可能
         &#123;
-            left &#x3D; mid + 1;
-        &#125;
-        else if (nums[mid] &gt; target)
-        &#123;
-            right &#x3D; mid - 1;
-        &#125;
-        else if (nums[mid] &lt; target)
-        &#123;
-            left &#x3D; mid + 1;
+            if(right - left &lt; len)
+            &#123;
+                start &#x3D; left;
+                len &#x3D; right - left;
+            &#125;
+            char d &#x3D; srcStr[left];
+            left++;
+            if (need.ContainsKey(d))
+            &#123;
+                if (window[d] &#x3D;&#x3D; need[d])
+                    valid--;
+                window[d]--;
+            &#125;
         &#125;
     &#125;
 
-    &#x2F;&#x2F; 最后要检查 right 越界的情况
-    if (right &lt; 0 || nums[right] !&#x3D; target)
-        return -1;
-    return right;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    return len &#x3D;&#x3D; int.MaxValue ? &quot;&quot; : srcStr.Substring(start,len);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="字符串排列顺序"><a href="#字符串排列顺序" class="headerlink" title="字符串排列顺序"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/permutation-in-string/">字符串排列顺序</a></h3><blockquote>
+<pre class="line-numbers language-none"><code class="language-none">输入：s1 &#x3D; &quot;ab&quot; s2 &#x3D; &quot;eidbaooo&quot;
+输出：true
+解释：s2 包含 s1 的排列之一 (&quot;ba&quot;).<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static bool checkInclusion(string t, string s)
+&#123;
+    &#x2F;&#x2F; 存储 需要识别的子串（A:1,B:1,C:1）
+    Dictionary&lt;char, int&gt; need &#x3D; new Dictionary&lt;char, int&gt;();
+    &#x2F;&#x2F; 滑动窗口中的字符串(A:2,B:1,C:2)
+    Dictionary&lt;char, int&gt; window &#x3D; new Dictionary&lt;char, int&gt;();
+    &#x2F;&#x2F; 拿到需要识别的子串数据
+    foreach (char c in t)
+    &#123;
+        if (need.ContainsKey(c))
+        &#123;
+            need[c]++;
+        &#125;
+        else
+        &#123;
+            need.Add(c, 1);
+        &#125;
+    &#125;
+
+    int left &#x3D; 0;
+    int right &#x3D; 0;
+    int valid &#x3D; 0;
+    bool isExist &#x3D; false;
+    while (right &lt; s.Length)
+    &#123;
+        char c &#x3D; s[right];
+        &#x2F;&#x2F; 右移窗口
+        right++;
+        &#x2F;&#x2F; 获取窗口中的符合 识别子串的字符进行缓存
+        if (need.ContainsKey(c))
+        &#123;
+            if (window.ContainsKey(c))
+            &#123;
+                window[c]++;
+            &#125;
+            else
+            &#123;
+                window.Add(c, 1);
+            &#125;
+            &#x2F;&#x2F; 符合一个就计数1个
+            if (window[c] &#x3D;&#x3D; need[c])
+            &#123;
+                valid++;
+            &#125;
+        &#125;
+
+        &#x2F;&#x2F; 这个时候已经找到了覆盖子串的字符串窗口进行左移缩小窗口
+        while ((right -left)&gt;&#x3D;t.Length)
+        &#123;
+            if (valid &#x3D;&#x3D; need.Count)
+            &#123;
+                isExist &#x3D; true;
+                break;
+            &#125;
+
+            char d &#x3D; s[left];
+            left++;
+            if (need.ContainsKey(d))
+            &#123;
+                if (window[d] &#x3D;&#x3D; need[d])
+                    valid--;
+                window[d]--;
+            &#125;
+        &#125;
+    &#125;
+
+    return isExist;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="最长无重复子串"><a href="#最长无重复子串" class="headerlink" title="最长无重复子串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">最长无重复子串</a></h3><blockquote>
+<pre class="line-numbers language-none"><code class="language-none">输入: s &#x3D; &quot;abcabcbb&quot;
+输出: 3 
+解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<pre class="line-numbers language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> <span class="token function">LengthOfLongestSubstring</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> s<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">></span></span> window <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token class-name"><span class="token keyword">int</span></span> left <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> right <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token class-name"><span class="token keyword">int</span></span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 记录结果</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>right <span class="token operator">&lt;</span> s<span class="token punctuation">.</span>Length<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token class-name"><span class="token keyword">char</span></span> c <span class="token operator">=</span> s<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        right<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token comment">// 进行窗口内数据的一系列更新</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            window<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">&#123;</span>
+            window<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 判断左侧窗口是否要收缩</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> window<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            <span class="token class-name"><span class="token keyword">char</span></span> d <span class="token operator">=</span> s<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            left<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token comment">// 进行窗口内数据的一系列更新</span>
+            window<span class="token punctuation">[</span>d<span class="token punctuation">]</span><span class="token operator">--</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 在这里更新答案</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">></span> res<span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+            res <span class="token operator">=</span> right <span class="token operator">-</span> left<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -602,7 +706,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://oxford561.github.io/2021/10/23/leetcode-xue-xi-er-fen-sou-suo-suan-fa/">https://oxford561.github.io/2021/10/23/leetcode-xue-xi-er-fen-sou-suo-suan-fa/</a>
+                    <a href="https://oxford561.github.io/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/">https://oxford561.github.io/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -813,17 +917,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/10/27/leetcode-xue-xi-cha-zhao-lian-biao-yuan-su/">
+                <a href="/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Leetcode学习-查找链表元素">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Leetcode学习-滑动窗口">
                         
-                        <span class="card-title">Leetcode学习-查找链表元素</span>
+                        <span class="card-title">Leetcode学习-滑动窗口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -833,9 +938,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -848,6 +953,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -866,13 +972,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/23/leetcode-xue-xi-hui-wen-chuan-de-pan-duan/">
+                <a href="/2021/10/27/leetcode-xue-xi-lian-biao-de-huan-yu-xiang-jiao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Leetcode学习-回文串的判断">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Leetcode学习-链表的环与相交">
                         
-                        <span class="card-title">Leetcode学习-回文串的判断</span>
+                        <span class="card-title">Leetcode学习-链表的环与相交</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -883,7 +989,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-27
                             </span>
                         <span class="publish-author">
                             
