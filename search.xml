@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Leetcode学习-栈和队列的互转</title>
+      <link href="/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/"/>
+      <url>/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/</url>
+      
+        <content type="html"><![CDATA[<h3 id="栈和队列结构"><a href="#栈和队列结构" class="headerlink" title="栈和队列结构"></a>栈和队列结构</h3><blockquote><p>队列是一种先进先出的数据结构，栈是一种先进后出的数据结构</p></blockquote><p><img src="/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/1.jpg" alt="image-20211028094036710"></p><h3 id="栈实现队列"><a href="#栈实现队列" class="headerlink" title="栈实现队列"></a><a href="https://leetcode-cn.com/problems/implement-queue-using-stacks/">栈实现队列</a></h3><p>队列的结构是先进先出的，基于栈这种先进后出的结构是无法直接实现队列的，这里采用的是双栈的结构来实现，简单理解就是一个栈 S1 用于存放 Push 进来的元素，而 S2 则是用于取元素使用的。</p><p>但是队列取元素取的是最先进去的那个元素，所以 S2 做的工作就是将 S1 存放的元素颠倒存放进 S2，简单说就是在取元素的时候，将 S1 当中的元素全部拿出来放进 S2，这样 S2 最上面的元素就是模拟队列的队头元素了。</p><p>后面继续取模拟队列元素的时候，只需要去取 S2 中的元素，当然如果 S2 当中没有元素则需要再将 S1 中的元素放进来就可以了。这里判断模拟队列为空的时候就需要对比 S1 和 S2 两个栈的元素是否为空了。</p><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public class MyQueue &#123;    private Stack&lt;int&gt; s1, s2;    public MyQueue() &#123;        s1 &#x3D; new Stack&lt;int&gt;();        s2 &#x3D; new Stack&lt;int&gt;();    &#125;        public void Push(int x) &#123;        s1.Push(x);    &#125;        public int Pop() &#123;        &#x2F;&#x2F; 确保 S2 中有元素可取        Peek();        return s2.Pop();    &#125;        public int Peek() &#123;        &#x2F;&#x2F; 发现 S2 元素没有了        if (s2.Count &#x3D;&#x3D; 0)        &#123;            &#x2F;&#x2F; 再从 S1 中拿元素存放            while (s1.Count !&#x3D; 0)            &#123;                s2.Push(s1.Pop());            &#125;        &#125;        &#x2F;&#x2F; 这里其实还需要对 S2 栈元素个数判断，防止异常        return s2.Peek();    &#125;        public bool Empty() &#123;        return s1.Count &#x3D;&#x3D; 0 &amp;&amp; s2.Count &#x3D;&#x3D; 0;    &#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="队列实现栈"><a href="#队列实现栈" class="headerlink" title="队列实现栈"></a><a href="https://leetcode-cn.com/problems/implement-stack-using-queues/">队列实现栈</a></h3><p>基于队列来实现栈的结构，没有上面那么麻烦，也不需要多个队列来做，这里只需要一个队列就可以了。</p><p>存放元素的操作依旧使用的队列入队操作，但是取元素的时候，需要考虑当前模拟栈的栈顶元素是队列的头元素也就是最小放进去的元素，直接取出元素是不符合栈的结构的，那么这个时候需要将队列的前几个元素全部出队，留下 2 个元素，然后将出队的元素添加到队尾。</p><p>之所以留下 2 个元素，是因为我们需要记录当前模拟栈顶的元素（倒数第一个是需要出队的，但是出队的同时倒数第二个就是模拟栈顶元素了）</p><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public class MyStack &#123;    private Queue&lt;int&gt; q;    private int top &#x3D; 0;    public MyStack() &#123;        q &#x3D; new Queue&lt;int&gt;();    &#125;        public void Push(int x) &#123;        q.Enqueue(x);        top &#x3D; x;    &#125;        public int Pop() &#123;        int size &#x3D; q.Count;        &#x2F;&#x2F; 留下最后两个元素        while (size &gt; 2)        &#123;            q.Enqueue(q.Dequeue());            size--;        &#125;        top &#x3D; q.Peek();&#x2F;&#x2F; 原先倒数第二个元素就是栈顶元素了        q.Enqueue(q.Dequeue());        return q.Dequeue();&#x2F;&#x2F;原先倒数第一个元素是需要出队的    &#125;        public int Top() &#123;        return top;    &#125;        public bool Empty() &#123;        return q.Count &#x3D;&#x3D; 0;    &#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Leetcode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Leetcode学习-滑动窗口</title>
       <link href="/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/"/>
       <url>/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/</url>

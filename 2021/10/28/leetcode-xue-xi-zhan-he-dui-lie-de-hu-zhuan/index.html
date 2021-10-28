@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Leetcode学习-滑动窗口, 水聿津">
+    <meta name="keywords" content="Leetcode学习-栈和队列的互转, 水聿津">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Leetcode学习-滑动窗口 | 水聿津</title>
+    <title>Leetcode学习-栈和队列的互转 | 水聿津</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Leetcode学习-滑动窗口</h1>
+                    <h1 class="description center-align post-title">Leetcode学习-栈和队列的互转</h1>
                 </div>
             </div>
         </div>
@@ -456,7 +456,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-10-27
+                    2021-10-28
                 </div>
                 
 
@@ -480,206 +480,89 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="什么是滑动窗口"><a href="#什么是滑动窗口" class="headerlink" title="什么是滑动窗口"></a>什么是滑动窗口</h3><p>滑动窗口也就是之前说过的双指针技巧，通过维护一个窗口，不断滑动，然后更新结果，其主要的应用场景就是在字符串的匹配上了，比如最小覆盖子串、最长无重复子串等。</p>
-<p>滑动窗口的算法上确实维护着一个窗口，可实际理解起来还是有点麻烦，不过按照步骤划分的话也就如下的几步：</p>
-<ul>
-<li>首先我们依旧通过声明双指针 left = right = 0。</li>
-<li> right ++ ，不断遍历源字符串，直到遍历过的字符串（窗口）中已经找到覆盖需要匹配的字符串要求(或者满足某种条件)</li>
-<li>然后 left++，缩小【left,right）的窗口，直到窗口中的字符串不符合匹配的字符串要求</li>
-<li>重复 2 和 3，直到遍历完整个字符串</li>
-</ul>
-<h3 id="最短覆盖子串"><a href="#最短覆盖子串" class="headerlink" title="最短覆盖子串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-window-substring/">最短覆盖子串</a></h3><blockquote>
-<pre class="line-numbers language-none"><code class="language-none">输入：s &#x3D; &quot;ADOBECODEBANC&quot;, t &#x3D; &quot;ABC&quot;
-输出：&quot;BANC&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <h3 id="栈和队列结构"><a href="#栈和队列结构" class="headerlink" title="栈和队列结构"></a>栈和队列结构</h3><blockquote>
+<p>队列是一种先进先出的数据结构，栈是一种先进后出的数据结构</p>
 </blockquote>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">&#x2F;&#x2F; 滑动窗口（最小覆盖子串）  “AD0BEC0DEBANC”  “ABC”
-public static string MinWindow(string srcStr, string patter)
-&#123;
-    &#x2F;&#x2F; 存储 需要识别的子串（A:1,B:1,C:1）
-    Dictionary&lt;char, int&gt; need &#x3D; new Dictionary&lt;char, int&gt;();
-    &#x2F;&#x2F; 滑动窗口中的字符串(A:2,B:1,C:2)
-    Dictionary&lt;char, int&gt; window &#x3D; new Dictionary&lt;char, int&gt;();
-    &#x2F;&#x2F; 拿到需要识别的子串数据
-    foreach (char c in patter)
-    &#123;
-        if (need.ContainsKey(c))
-        &#123;
-            need[c]++;
-        &#125;
-        else
-        &#123;
-            need.Add(c, 1);
-        &#125;
+<p><img src="/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/1.jpg" alt="image-20211028094036710"></p>
+<h3 id="栈实现队列"><a href="#栈实现队列" class="headerlink" title="栈实现队列"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-queue-using-stacks/">栈实现队列</a></h3><p>队列的结构是先进先出的，基于栈这种先进后出的结构是无法直接实现队列的，这里采用的是双栈的结构来实现，简单理解就是一个栈 S1 用于存放 Push 进来的元素，而 S2 则是用于取元素使用的。</p>
+<p>但是队列取元素取的是最先进去的那个元素，所以 S2 做的工作就是将 S1 存放的元素颠倒存放进 S2，简单说就是在取元素的时候，将 S1 当中的元素全部拿出来放进 S2，这样 S2 最上面的元素就是模拟队列的队头元素了。</p>
+<p>后面继续取模拟队列元素的时候，只需要去取 S2 中的元素，当然如果 S2 当中没有元素则需要再将 S1 中的元素放进来就可以了。这里判断模拟队列为空的时候就需要对比 S1 和 S2 两个栈的元素是否为空了。</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public class MyQueue &#123;
+    private Stack&lt;int&gt; s1, s2;
+    public MyQueue() &#123;
+        s1 &#x3D; new Stack&lt;int&gt;();
+        s2 &#x3D; new Stack&lt;int&gt;();
     &#125;
-
-    int left &#x3D; 0;
-    int right &#x3D; 0;
-    int valid &#x3D; 0;
-    int start &#x3D; 0;
-    int len &#x3D; int.MaxValue;
-    while(right &lt; srcStr.Length)
-    &#123;
-        char c &#x3D; srcStr[right];
-        &#x2F;&#x2F; 右移窗口
-        right++;
-        &#x2F;&#x2F; 获取窗口中的符合 识别子串的字符进行缓存
-        if(need.ContainsKey(c))
-        &#123;
-            if (window.ContainsKey(c))
-            &#123;
-                window[c]++;
-            &#125;
-            else
-            &#123;
-                window.Add(c, 1);
-            &#125;
-            &#x2F;&#x2F; 符合一个就计数1个
-            if (window[c] &#x3D;&#x3D; need[c])
-            &#123;
-                valid++;
-            &#125;
-        &#125;
-
-        &#x2F;&#x2F; 这个时候已经找到了覆盖子串的字符串窗口进行左移缩小窗口
-        while(valid &#x3D;&#x3D; need.Count)&#x2F;&#x2F;存在重复的可能
-        &#123;
-            if(right - left &lt; len)
-            &#123;
-                start &#x3D; left;
-                len &#x3D; right - left;
-            &#125;
-            char d &#x3D; srcStr[left];
-            left++;
-            if (need.ContainsKey(d))
-            &#123;
-                if (window[d] &#x3D;&#x3D; need[d])
-                    valid--;
-                window[d]--;
-            &#125;
-        &#125;
+    
+    public void Push(int x) &#123;
+        s1.Push(x);
     &#125;
-
-    return len &#x3D;&#x3D; int.MaxValue ? &quot;&quot; : srcStr.Substring(start,len);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h3 id="字符串排列顺序"><a href="#字符串排列顺序" class="headerlink" title="字符串排列顺序"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/permutation-in-string/">字符串排列顺序</a></h3><blockquote>
-<pre class="line-numbers language-none"><code class="language-none">输入：s1 &#x3D; &quot;ab&quot; s2 &#x3D; &quot;eidbaooo&quot;
-输出：true
-解释：s2 包含 s1 的排列之一 (&quot;ba&quot;).<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</blockquote>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public static bool checkInclusion(string t, string s)
-&#123;
-    &#x2F;&#x2F; 存储 需要识别的子串（A:1,B:1,C:1）
-    Dictionary&lt;char, int&gt; need &#x3D; new Dictionary&lt;char, int&gt;();
-    &#x2F;&#x2F; 滑动窗口中的字符串(A:2,B:1,C:2)
-    Dictionary&lt;char, int&gt; window &#x3D; new Dictionary&lt;char, int&gt;();
-    &#x2F;&#x2F; 拿到需要识别的子串数据
-    foreach (char c in t)
-    &#123;
-        if (need.ContainsKey(c))
-        &#123;
-            need[c]++;
-        &#125;
-        else
-        &#123;
-            need.Add(c, 1);
-        &#125;
+    
+    public int Pop() &#123;
+        &#x2F;&#x2F; 确保 S2 中有元素可取
+        Peek();
+        return s2.Pop();
     &#125;
-
-    int left &#x3D; 0;
-    int right &#x3D; 0;
-    int valid &#x3D; 0;
-    bool isExist &#x3D; false;
-    while (right &lt; s.Length)
-    &#123;
-        char c &#x3D; s[right];
-        &#x2F;&#x2F; 右移窗口
-        right++;
-        &#x2F;&#x2F; 获取窗口中的符合 识别子串的字符进行缓存
-        if (need.ContainsKey(c))
+    
+    public int Peek() &#123;
+        &#x2F;&#x2F; 发现 S2 元素没有了
+        if (s2.Count &#x3D;&#x3D; 0)
         &#123;
-            if (window.ContainsKey(c))
+            &#x2F;&#x2F; 再从 S1 中拿元素存放
+            while (s1.Count !&#x3D; 0)
             &#123;
-                window[c]++;
-            &#125;
-            else
-            &#123;
-                window.Add(c, 1);
-            &#125;
-            &#x2F;&#x2F; 符合一个就计数1个
-            if (window[c] &#x3D;&#x3D; need[c])
-            &#123;
-                valid++;
+                s2.Push(s1.Pop());
             &#125;
         &#125;
-
-        &#x2F;&#x2F; 这个时候已经找到了覆盖子串的字符串窗口进行左移缩小窗口
-        while ((right -left)&gt;&#x3D;t.Length)
-        &#123;
-            if (valid &#x3D;&#x3D; need.Count)
-            &#123;
-                isExist &#x3D; true;
-                break;
-            &#125;
-
-            char d &#x3D; s[left];
-            left++;
-            if (need.ContainsKey(d))
-            &#123;
-                if (window[d] &#x3D;&#x3D; need[d])
-                    valid--;
-                window[d]--;
-            &#125;
-        &#125;
+        &#x2F;&#x2F; 这里其实还需要对 S2 栈元素个数判断，防止异常
+        return s2.Peek();
     &#125;
+    
+    public bool Empty() &#123;
+        return s1.Count &#x3D;&#x3D; 0 &amp;&amp; s2.Count &#x3D;&#x3D; 0;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    return isExist;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
-<h3 id="最长无重复子串"><a href="#最长无重复子串" class="headerlink" title="最长无重复子串"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">最长无重复子串</a></h3><blockquote>
-<pre class="line-numbers language-none"><code class="language-none">输入: s &#x3D; &quot;abcabcbb&quot;
-输出: 3 
-解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</blockquote>
-<pre class="line-numbers language-csharp" data-language="csharp"><code class="language-csharp"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> <span class="token function">LengthOfLongestSubstring</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span></span> s<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-    <span class="token class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">></span></span> window <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">Dictionary<span class="token punctuation">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    <span class="token class-name"><span class="token keyword">int</span></span> left <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> right <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token class-name"><span class="token keyword">int</span></span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">// 记录结果</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>right <span class="token operator">&lt;</span> s<span class="token punctuation">.</span>Length<span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-        <span class="token class-name"><span class="token keyword">char</span></span> c <span class="token operator">=</span> s<span class="token punctuation">[</span>right<span class="token punctuation">]</span><span class="token punctuation">;</span>
-        right<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token comment">// 进行窗口内数据的一系列更新</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#123;</span>
-            window<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">else</span>
-        <span class="token punctuation">&#123;</span>
-            window<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">// 判断左侧窗口是否要收缩</span>
-        <span class="token keyword">while</span> <span class="token punctuation">(</span>window<span class="token punctuation">.</span><span class="token function">ContainsKey</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> window<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token punctuation">&#123;</span>
-            <span class="token class-name"><span class="token keyword">char</span></span> d <span class="token operator">=</span> s<span class="token punctuation">[</span>left<span class="token punctuation">]</span><span class="token punctuation">;</span>
-            left<span class="token operator">++</span><span class="token punctuation">;</span>
-            <span class="token comment">// 进行窗口内数据的一系列更新</span>
-            window<span class="token punctuation">[</span>d<span class="token punctuation">]</span><span class="token operator">--</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">// 在这里更新答案</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>right <span class="token operator">-</span> left<span class="token punctuation">)</span> <span class="token operator">></span> res<span class="token punctuation">)</span>
-        <span class="token punctuation">&#123;</span>
-            res <span class="token operator">=</span> right <span class="token operator">-</span> left<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="队列实现栈"><a href="#队列实现栈" class="headerlink" title="队列实现栈"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-stack-using-queues/">队列实现栈</a></h3><p>基于队列来实现栈的结构，没有上面那么麻烦，也不需要多个队列来做，这里只需要一个队列就可以了。</p>
+<p>存放元素的操作依旧使用的队列入队操作，但是取元素的时候，需要考虑当前模拟栈的栈顶元素是队列的头元素也就是最小放进去的元素，直接取出元素是不符合栈的结构的，那么这个时候需要将队列的前几个元素全部出队，留下 2 个元素，然后将出队的元素添加到队尾。</p>
+<p>之所以留下 2 个元素，是因为我们需要记录当前模拟栈顶的元素（倒数第一个是需要出队的，但是出队的同时倒数第二个就是模拟栈顶元素了）</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public class MyStack &#123;
+    private Queue&lt;int&gt; q;
+    private int top &#x3D; 0;
+    public MyStack() &#123;
+        q &#x3D; new Queue&lt;int&gt;();
+    &#125;
+    
+    public void Push(int x) &#123;
+        q.Enqueue(x);
+        top &#x3D; x;
+    &#125;
+    
+    public int Pop() &#123;
+        int size &#x3D; q.Count;
+        &#x2F;&#x2F; 留下最后两个元素
+        while (size &gt; 2)
+        &#123;
+            q.Enqueue(q.Dequeue());
+            size--;
+        &#125;
+        top &#x3D; q.Peek();&#x2F;&#x2F; 原先倒数第二个元素就是栈顶元素了
+        q.Enqueue(q.Dequeue());
+        return q.Dequeue();&#x2F;&#x2F;原先倒数第一个元素是需要出队的
+    &#125;
+    
+    public int Top() &#123;
+        return top;
+    &#125;
+    
+    public bool Empty() &#123;
+        return q.Count &#x3D;&#x3D; 0;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -706,7 +589,7 @@ public static string MinWindow(string srcStr, string patter)
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://oxford561.github.io/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/">https://oxford561.github.io/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/</a>
+                    <a href="https://oxford561.github.io/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/">https://oxford561.github.io/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -917,9 +800,10 @@ public static string MinWindow(string srcStr, string patter)
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/">
                     <div class="card-image">
@@ -937,9 +821,9 @@ public static string MinWindow(string srcStr, string patter)
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-10-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-10-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -952,6 +836,7 @@ public static string MinWindow(string srcStr, string patter)
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -970,13 +855,13 @@ public static string MinWindow(string srcStr, string patter)
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/10/27/leetcode-xue-xi-lian-biao-de-huan-yu-xiang-jiao/">
+                <a href="/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Leetcode学习-链表的环与相交">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Leetcode学习-滑动窗口">
                         
-                        <span class="card-title">Leetcode学习-链表的环与相交</span>
+                        <span class="card-title">Leetcode学习-滑动窗口</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
