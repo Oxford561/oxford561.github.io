@@ -1,7 +1,286 @@
-extends includes/layout.pug
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>水聿津 - 坚持做有价值的输出</title><meta name="author" content="水聿津"><meta name="copyright" content="水聿津"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="水聿津">
+<meta property="og:url" content="https://oxford561.github.io/page/2/index.html">
+<meta property="og:site_name" content="水聿津">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:author" content="水聿津">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://oxford561.github.io/page/2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '水聿津',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-12-02 20:31:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-block content
-  include ./includes/mixins/post-ui.pug
-  #recent-posts.recent-posts
-    +postUI
-    include includes/pagination.pug
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="水聿津" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">水聿津</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">水聿津</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/10/18/csharp-chang-gui-xu-lie-hua-fang-shi/" title="C# 常规序列化方式">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C# 常规序列化方式"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/10/18/csharp-chang-gui-xu-lie-hua-fang-shi/" title="C# 常规序列化方式">C# 常规序列化方式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-18T12:19:57.000Z" title="发表于 2021-10-18 20:19:57">2021-10-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="content">序列化是什么？序列化就是将对象的状态信息转换为可以存储或传输形式的过程。 其实就是将对象持久化，比如说把对象保存为二进制或者是XML的方式。 可以将对象序列到流、磁盘、内存和网络等等。 相反，反序列化则是将存储或传输形式转换为对象的过程。
+序列化对象序列化的对象需要在 class 上面添加 「 Serializable 」 标签，嵌套对象也是需要的。
+[Serializable]
+class Student
+&#123;
+    public string name;
+    public int age;
+    public Address address;
+&#125;
+
+[Serializable]
+class Address
+&#123;
+    public string province;
+&#125;
+
+
+
+序列化代码public static byte[] Serialize(Student stu)
+&#123;
+    byte[] data &#x3D; null;
+    MemoryStream ms &#x3D; new MemoryStream();
+  ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/06/22/di-yi-ge-cpp-cheng-xu/" title="第一个CPP程序">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="第一个CPP程序"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/06/22/di-yi-ge-cpp-cheng-xu/" title="第一个CPP程序">第一个CPP程序</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-06-22T14:29:57.000Z" title="发表于 2021-06-22 22:29:57">2021-06-22</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="content">创建项目既然是学习C++，必然少不了我们的宇宙最好的IDE—VS，使用VS创建一个支持C++的空项目。
+创建文件然后在创建好的工程里，源文件右击添加新建项，选择cpp文件进行代码文件的创建。
+编写代码在 CPP 文件中编写如下的代码，便能够得到 Hello World的结果了，具体代码的作用暂且不管~
+
+#include &lt;iostream&gt;
+using namespace std;
+
+int main() &#123;
+	cout &lt;&lt; &quot;Hello World&quot; &lt;&lt; endl;
+	return 0;
+&#125;
+
+
+运行程序写完代码在VS上点击运行按钮即可看到运行结果。
+
+</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/06/21/you-yong-chu-chang-shi/" title="游泳初尝试">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="游泳初尝试"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/06/21/you-yong-chu-chang-shi/" title="游泳初尝试">游泳初尝试</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-06-21T13:59:33.000Z" title="发表于 2021-06-21 21:59:33">2021-06-21</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></span></div><div class="content">今天下午终于迈出了第一步，跟着老婆下到小区的游泳池，前段时间办理的游泳卡用到了～
+泳池里来的人不多，主要是我们下午3点半开始做饭，四点半就吃完晚饭了，五点半来到这边，基本还有好多人还在家吃饭吧。
+在岸边戴好帽子和眼镜，而且也带来了游泳圈，本来不太想带游泳圈的，毕竟我们这么大的人，不过我们都不会游泳，所以为了安全带了。
+事实证明游泳圈确实是带对了，有了游泳圈，套在自己的身上是完全不怕沉下去的，我试过无论怎么翻身都稳稳漂在水上。
+下水之后，主要还是看老婆表演，毕竟她比我有基础，我除了几年前在泰国下过水，基本都没有下水了，我老婆小时候就经常游，不过长大了也不是很会。
+我们俩折腾了两个小时，我发现泳帽下拉可以盖住耳朵防止进水，泳镜也不会进水，然后我尝试憋气沉下去，发现问题不大，然后逐渐胆子变大，尝试憋气模仿其他人游泳的姿势，在水里折腾了几下，发现可以在水下前行，我老婆都惊呆了，我竟然可以憋气下潜游泳，憋气多久就能游多远，不过就是没气的话就慌了，时常呛水～
+然后又过了差不多一个小时，我基本掌握了憋气下潜游泳，不得不说我在游泳这方面是有天赋的！
+差不多就回来了，实在是很不错的经历，以后可以常来游泳 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/06/16/hello-world/" title="Hello World">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/06/16/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-06-16T13:35:58.823Z" title="发表于 2021-06-16 21:35:58">2021-06-16</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post$ hexo new "My New Post"
+
+More info: Writing
+Run server$ hexo server
+
+More info: Server
+Generate static files$ hexo generate
+
+More info: Generating
+Deploy to remote sites$ hexo deploy
+
+More info: Deployment
+</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/05/30/bu-ke-pai-mei-hua-5/" title="扑克牌—梅花5">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="扑克牌—梅花5"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/30/bu-ke-pai-mei-hua-5/" title="扑克牌—梅花5">扑克牌—梅花5</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-30T06:35:39.000Z" title="发表于 2021-05-30 14:35:39">2021-05-30</time></span></div><div class="content">多用谷歌引擎多去搜一搜普通人可能遇到的问题，并且思考有哪些办法能帮助他们解决问题。这样操作的次数多了以后，你会发现自己寻找需求的敏锐度有极大的提升。
+</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/05/30/bu-ke-pai-mei-hua-4/" title="扑克牌—梅花4">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="扑克牌—梅花4"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/30/bu-ke-pai-mei-hua-4/" title="扑克牌—梅花4">扑克牌—梅花4</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-30T06:34:02.000Z" title="发表于 2021-05-30 14:34:02">2021-05-30</time></span></div><div class="content">不要心存侥幸，你觉得可能出bug的地方，很大几率就会有bug。
+互联网是世界上最全，最大的“书”，在问别人之前，要先学会问搜索引擎。
+</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/05/30/bu-ke-pai-mei-hua-3/" title="扑克牌—梅花3">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="扑克牌—梅花3"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/30/bu-ke-pai-mei-hua-3/" title="扑克牌—梅花3">扑克牌—梅花3</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-30T06:30:28.000Z" title="发表于 2021-05-30 14:30:28">2021-05-30</time></span></div><div class="content">多去了解各种现成的接口、插件、库。可能有些工程师经常调侃自己为接口的调试员，其实无伤大雅，我们看中的是你独立解决问题的能力。这是一场开卷考试，如何更快地帮助公司解决问题，是最重要的。
+</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/05/30/bu-ke-pai-mei-hua-2/" title="扑克牌—梅花2">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="扑克牌—梅花2"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/30/bu-ke-pai-mei-hua-2/" title="扑克牌—梅花2">扑克牌—梅花2</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-30T06:28:44.000Z" title="发表于 2021-05-30 14:28:44">2021-05-30</time></span></div><div class="content">不要重复造轮子，虽然技术上的成就感很有价值，但是从长远回报来看，更多地去从商业角度考虑问题，可能会价值更大。
+</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/05/30/bu-ke-pai-mei-hua-a/" title="扑克牌—梅花A">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="扑克牌—梅花A"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/30/bu-ke-pai-mei-hua-a/" title="扑克牌—梅花A">扑克牌—梅花A</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-30T06:26:18.000Z" title="发表于 2021-05-30 14:26:18">2021-05-30</time></span></div><div class="content">对你而言时间是最宝贵的，如果说能用钱去节省你的时间，请不要节省。付费去获取信息，付费去买工具，付费去买别人的时间，付费去买别人的资源……相信我，节省出来的时间，可以创造出无数的价值。
+</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/05/27/xun-huan-dui-lie/" title="循环队列">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="循环队列"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/27/xun-huan-dui-lie/" title="循环队列">循环队列</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-27T13:12:32.000Z" title="发表于 2021-05-27 21:12:32">2021-05-27</time></span></div><div class="content">Python 数组实现循环队列~
+
+
+# 循环队列 用数组实现
+
+class CircularQueue(object):
+    
+    def __init__(self,max_size):
+        self.max_size &#x3D; max_size
+        self.data &#x3D; [None]*max_size
+        self.front &#x3D; 0
+        self.rear &#x3D; 0
+
+    def isEmpty(self):
+        return self.front &#x3D;&#x3D; self.rear
+
+    def isFull(self):
+        return (self.rear + 1)%self.max_size &#x3D;&#x3D; self.front
+       
+    def enqueue(self,value):
+        if self.isFull():
+            print(&#39;循环队列满了！&#39;)
+  ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/05/27/shun-xu-dui-lie/" title="顺序队列">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="顺序队列"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/27/shun-xu-dui-lie/" title="顺序队列">顺序队列</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-27T13:11:05.000Z" title="发表于 2021-05-27 21:11:05">2021-05-27</time></span></div><div class="content">Python 数组实现顺序队列~
+
+
+# 顺序队列 用数组实现的队列
+
+# 运用 py list 特性实现
+# class ArrayQueue(object):
+#     def __init__(self):
+#         self.data &#x3D; []
+
+#     def isEmpty(self):
+#         return self.data &#x3D;&#x3D; []
+
+#     def enqueue(self,value):
+#         self.data.insert(0,value)
+
+#     def dequeue(self):
+#         return self.data.pop()
+
+#     def showHead(self):
+#         print(&quot;数据长度 &quot;+str(len(self.data)))
+#         return self.data[len(self.data)-1]
+
+#     def show(self):
+#         for i  ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/05/27/xi-shu-shu-zu/" title="稀疏数组">     <img class="post_bg" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="稀疏数组"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/05/27/xi-shu-shu-zu/" title="稀疏数组">稀疏数组</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-27T13:09:13.000Z" title="发表于 2021-05-27 21:09:13">2021-05-27</time></span></div><div class="content">稀疏数组的实现方式~
+
+
+# 稀疏数组
+# 1 0 0 0 0 0     5 6 3
+# 0 0 3 0 0 0     0 0 1
+# 0 0 0 0 0 0  &#x3D;&gt; 1 2 3
+# 0 0 0 0 2 0     3 4 2
+# 0 0 0 0 0 0
+
+def testSparseArray():
+    # 构建原始数组
+    initArr &#x3D; [[0]*6 for i in range(5)]
+    initArr[0][0] &#x3D; 1
+    initArr[1][2] &#x3D; 3
+    initArr[3][4] &#x3D; 2
+
+    # 打印初始数组
+    for i in range(5):
+        for j in range(6):
+            print(str(initArr[i][j]) + &quot; &quot;,end&#x3D;&#39;&#39;)
+        print(&quot;\n&quot;)
+    
+    # 找到原始数组中的有效数据
+    sum ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">水聿津</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/11/20/c-he-xin-bian-cheng/" title="C++核心编程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++核心编程"/></a><div class="content"><a class="title" href="/2021/11/20/c-he-xin-bian-cheng/" title="C++核心编程">C++核心编程</a><time datetime="2021-11-20T08:17:07.000Z" title="发表于 2021-11-20 16:17:07">2021-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/20/c-ji-chu-ru-men/" title="C++基础入门"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++基础入门"/></a><div class="content"><a class="title" href="/2021/11/20/c-ji-chu-ru-men/" title="C++基础入门">C++基础入门</a><time datetime="2021-11-20T08:05:27.000Z" title="发表于 2021-11-20 16:05:27">2021-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/" title="Leetcode学习-栈和队列的互转"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Leetcode学习-栈和队列的互转"/></a><div class="content"><a class="title" href="/2021/10/28/leetcode-xue-xi-zhan-he-dui-lie-de-hu-zhuan/" title="Leetcode学习-栈和队列的互转">Leetcode学习-栈和队列的互转</a><time datetime="2021-10-28T12:03:06.000Z" title="发表于 2021-10-28 20:03:06">2021-10-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/" title="Leetcode学习-滑动窗口"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Leetcode学习-滑动窗口"/></a><div class="content"><a class="title" href="/2021/10/27/leetcode-xue-xi-hua-dong-chuang-kou/" title="Leetcode学习-滑动窗口">Leetcode学习-滑动窗口</a><time datetime="2021-10-27T11:51:07.000Z" title="发表于 2021-10-27 19:51:07">2021-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/27/leetcode-xue-xi-lian-biao-de-huan-yu-xiang-jiao/" title="Leetcode学习-链表的环与相交"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Leetcode学习-链表的环与相交"/></a><div class="content"><a class="title" href="/2021/10/27/leetcode-xue-xi-lian-biao-de-huan-yu-xiang-jiao/" title="Leetcode学习-链表的环与相交">Leetcode学习-链表的环与相交</a><time datetime="2021-10-27T11:48:57.000Z" title="发表于 2021-10-27 19:48:57">2021-10-27</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">技术</span><span class="card-category-list-count">13</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/"><span class="card-category-list-name">生活</span><span class="card-category-list-count">1</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/C/" style="font-size: 1.26em; color: #999fa8">C#</a> <a href="/tags/C/" style="font-size: 1.18em; color: #999ca1">C++</a> <a href="/tags/Gridea/" style="font-size: 1.1em; color: #999">Gridea</a> <a href="/tags/Leetcode/" style="font-size: 1.34em; color: #99a3b0">Leetcode</a> <a href="/tags/Python%E6%95%99%E7%A8%8B/" style="font-size: 1.5em; color: #99a9bf">Python教程</a> <a href="/tags/%E6%89%91%E5%85%8B%E7%89%8C%E5%B0%81%E9%9D%A2/" style="font-size: 1.42em; color: #99a6b7">扑克牌封面</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" style="font-size: 1.26em; color: #999fa8">数据结构与算法</a> <a href="/tags/%E6%96%87%E7%AB%A0%E6%B5%8B%E8%AF%95/" style="font-size: 1.1em; color: #999">文章测试</a> <a href="/tags/%E6%97%A5%E8%AE%B0%E9%9A%8F%E7%AC%94/" style="font-size: 1.1em; color: #999">日记随笔</a> <a href="/tags/%E7%90%86%E8%B4%A2/" style="font-size: 1.1em; color: #999">理财</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/11/"><span class="card-archive-list-date">十一月 2021</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">十月 2021</span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/06/"><span class="card-archive-list-date">六月 2021</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/05/"><span class="card-archive-list-date">五月 2021</span><span class="card-archive-list-count">32</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/04/"><span class="card-archive-list-date">四月 2021</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2019/01/"><span class="card-archive-list-date">一月 2019</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2018/12/"><span class="card-archive-list-date">十二月 2018</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">58</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-12-02T12:31:47.291Z"></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 水聿津</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
